@@ -102,7 +102,11 @@ export default function SignUp() {
     }
   }
 
+  // change the email state if inputs are left empty
+
   const callEmailStateChange = function () {
+
+    // ensure that email doesn't exist
 
     fetch("/api/users").then(response => response.json()).then(data => {
       for (let ele of data) {
@@ -123,6 +127,8 @@ export default function SignUp() {
     })
   }
 
+  // change name state if inputs are left empty
+
   const callNameStateChange = function () {
     changeState("firstname", setFirstnameState);
     changeState("lastname", setLastnameState);
@@ -133,6 +139,8 @@ export default function SignUp() {
       changeClickCount();
     }
   }
+
+  // change username state if input is left empty
 
   const callUserNameStateChange = function () {
     changeState("username", setUsernameState);
