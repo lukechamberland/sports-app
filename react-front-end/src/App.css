@@ -95,3 +95,47 @@
   background-color: rgb(211, 211, 211);
   width: 300px;
 }
+
+.incorrect-password-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  align-items: column;
+}
+
+.incorrect-password-button {
+  background-color: rgb(231, 231, 231);
+  height: 20px;
+  margin-left: 25px;
+  margin-top: 50px;
+  border: none;
+  height: 50px;
+  width: 200px;
+  transition: 0.5s;
+}
+
+.incorrect-password-button:hover {
+  background-color: rgb(177, 177, 177);
+}
+
+.incorrect-email-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  align-items: column;
+}
+
+.incorrect-email-button {
+  background-color: rgb(231, 231, 231);
+  height: 20px;
+  margin-left: 50px;
+  margin-top: 50px;
+  border: none;
+  height: 50px;
+  width: 300px;
+  transition: 0.5s;
+}
+
+.incorrect-email-button:hover {
+  background-color: rgb(177, 177, 177);
+}

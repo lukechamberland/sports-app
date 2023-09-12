@@ -46,18 +46,22 @@ export default function SignUp() {
     placeholderText: "Enter your Username"
   })
 
+  // change the formData state
+
   const changeInput = (e) => {
     const newData = { ...formData }
     newData[e.target.id] = e.target.value;
     setFormData(newData);
   }
 
+  // send post request to the backend
+
   const handleSubmit = function (e) {
     e.preventDefault();
 
     callUserNameStateChange();
 
-    console.log(clickCount);
+    // ensure that every email is unique
 
     fetch("/api/users").then(response => response.json()).then(data => {
       for (let ele of data) {
@@ -81,6 +85,8 @@ export default function SignUp() {
         });
     })
   }
+
+  // alert user that inputs cannot be left emtpy
 
   const changeState = function (id, callback) {
     const input = document.getElementById(id);
@@ -208,7 +214,7 @@ export default function SignUp() {
     } else {
       return (
         <div class="login-form">
-          <h1>Please enter your username</h1>
+          <h1>Please enter a username</h1>
           <input
             onChange={(e) => changeInput(e)}
             id="username"
@@ -221,7 +227,7 @@ export default function SignUp() {
           />
           <button type="submit" class="submit-button" onClick={(e) => handleSubmit(e)}>Submit</button>
         </div>
-      )
+      ) 
     }
   }
 

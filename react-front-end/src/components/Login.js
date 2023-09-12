@@ -6,14 +6,21 @@ export default function Login() {
 
   const [fullData, setFullData] = useState([]);
 
+  const [correctInfoState, setCorrectInfoState] = useState(0);
+
   const navigate = useNavigate();
 
-  const changeNav = function(route) {
+  const changeNav = function (route) {
     navigate(route);
   }
 
-  const doesEmailExist = function() {
-    
+  const changeInfoState = function (num) {
+    setCorrectInfoState(num);
+    setFormData({ ...formData, password: "" });
+  }
+
+  const doesEmailExist = function () {
+
     let value = false;
 
     for (let obj of fullData) {
@@ -24,7 +31,7 @@ export default function Login() {
     return value;
   }
 
-  const checkPassword = function(arr) {
+  const checkPassword = function (arr) {
     let condition = true;
     let correctObj = {}
     for (let obj of arr) {
@@ -40,9 +47,9 @@ export default function Login() {
 
   useEffect(() => {
     axios.get("/api/users")
-    .then(arr => {
-      setFullData(arr.data)
-    })
+      .then(arr => {
+        setFullData(arr.data)
+      })
   }, []);
 
   const [formData, setFormData] = useState({
@@ -54,7 +61,7 @@ export default function Login() {
     email: "email-input",
     placeholderText: "Enter your email"
   });
-  
+
   const [passwordState, setPasswordState] = useState({
     password: "email-input",
     placeholderText: "Enter a password"
@@ -68,24 +75,24 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const condition = doesEmailExist();
     const nextCondition = checkPassword(fullData);
 
-      if (formData.email === '' || formData.password === '') {
-        return;
-      } else if (!condition) {
-        alert("email does not exist, please sign up.")
-        return;
-      } else if (!nextCondition) {
-        alert('Password is incorrect.')
-        return;
-      }
-      changeNav('/home');
-    
+    if (formData.email === '' || formData.password === '') {
+      return;
+    } else if (!condition) {
+      setCorrectInfoState(1)
+      return;
+    } else if (!nextCondition) {
+      setCorrectInfoState(2)
+      return;
+    }
+    changeNav('/home');
+
   }
 
-  const changeEmailState = function() {
+  const changeEmailState = function () {
     const input = document.getElementById("email");
     const length = input.value;
 
@@ -99,7 +106,7 @@ export default function Login() {
     }
   }
 
-  const changePasswordState = function() {
+  const changePasswordState = function () {
     const input = document.getElementById("password");
     const length = input.value;
 
@@ -113,41 +120,69 @@ export default function Login() {
     }
   }
 
-  const callStateChange = function() {
+  const callStateChange = function () {
     changeEmailState();
     changePasswordState();
   }
 
+  const returnCorrectDiv = function () {
+    if (correctInfoState === 0) {
+      return (
+        <div class="login-form-page">
+          <form class="login-form" onSubmit={handleSubmit}>
+            <h1>Login</h1>
+            <input
+              onChange={(e) => changeInput(e)}
+              id="email"
+              class={emailState.email}
+              action="/api/users"
+              method="POST"
+              type="email"
+              name="email"
+              value={formData.email}
+              placeholder={emailState.placeholderText}
+            />
+
+            <input
+              onChange={(e) => changeInput(e)}
+              id="password"
+              class={passwordState.password}
+              action="/api/users"
+              method="POST"
+              type="password"
+              name="password"
+              value={formData.password}
+              placeholder={passwordState.placeholderText}
+            />
+
+            <button type="submit" class="submit-button" onClick={() => callStateChange()}>Submit</button>
+          </form>
+        </div>
+      )
+    } else if (correctInfoState === 1) {
+      return (
+        <div class="incorrect-email-div">
+          <div>
+            <h2>Email does not exist, please sign up.</h2>
+            <button class="incorrect-email-button" onClick={() => changeNav('/signup')}>Sign Up</button>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div class="incorrect-password-div">
+          <div>
+            <h2>Password is incorrect.</h2>
+            <button class="incorrect-password-button" onClick={() => changeInfoState(0)}>Try again</button>
+          </div>
+        </div>
+      )
+    }
+  }
+
   return (
-    <div class="login-form-page">
-      <form class="login-form" onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <input 
-          onChange={(e) => changeInput(e)}
-          id="email"
-          class={emailState.email}
-          action="/api/users"
-          method="POST"
-          type="email"
-          name="email"
-          value={formData.email}
-          placeholder={emailState.placeholderText}
-        />
-
-        <input 
-          onChange={(e) => changeInput(e)}
-          id="password"
-          class={passwordState.password}
-          action="/api/users"
-          method="POST"
-          type="password"
-          name="password"
-          value={formData.password}
-          placeholder={passwordState.placeholderText}
-        />
-
-        <button type="submit" class="submit-button" onClick={() => callStateChange()}>Submit</button>
-      </form>
+    <div>
+      {returnCorrectDiv()}
     </div>
   )
 }
