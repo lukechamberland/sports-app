@@ -139,3 +139,45 @@
 .incorrect-email-button:hover {
   background-color: rgb(177, 177, 177);
 }
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 200px;
+  height: 150px;
+  width: 150px;
+  border-radius: 100px;
+  border: 10px solid rgb(255, 255, 255);
+  border-top: 10px solid rgba(239, 223, 83, 0.629);
+  border-right: 10px solid rgba(239, 223, 83, 0.623);
+  border-bottom: 10px solid rgba(239, 223, 83, 0.623);
+  animation: ani 3s linear infinite;
+}
+
+.circle-two {
+  height: 115px;
+  width: 115px;
+  border-radius: 75px;
+  border: 8px solid rgb(255, 255, 255);
+  border-top: 8px solid rgba(239, 223, 83, 0.636);
+  border-right: 8px solid rgba(239, 223, 83, 0.629);
+  border-left: 8px solid rgba(239, 223, 83, 0.629);
+  animation: ani 3s linear infinite;
+}
+
+@keyframes ani {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}

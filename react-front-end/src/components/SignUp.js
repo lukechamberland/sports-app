@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Circle from "./Circle";
 
 export default function SignUp() {
 
@@ -78,7 +79,10 @@ export default function SignUp() {
       })
         .then((data) => {
           console.log(data);
-          changeNavigate('/home');
+          changeClickCount(4);
+          setTimeout(() => {
+            changeNavigate('/home');
+          }, 1500)
         })
         .catch((error) => {
           console.error(error);
@@ -122,7 +126,10 @@ export default function SignUp() {
       if (formData.email === '' || formData.password === '') {
         return;
       } else {
-        changeClickCount();
+        changeClickCount(3);
+        setTimeout(() => {
+          changeClickCount(1);
+        }, 1200)
       }
     })
   }
@@ -136,7 +143,10 @@ export default function SignUp() {
     if (formData.firstname === '' || formData.lastname === '') {
       return;
     } else {
-      changeClickCount();
+      changeClickCount(4);
+        setTimeout(() => {
+          changeClickCount(2);
+        }, 1200)
     }
   }
 
@@ -147,14 +157,11 @@ export default function SignUp() {
 
     if (formData.username === '') {
       return;
-    } else {
-      console.log(formData);
-      changeNavigate('/home');
     }
   }
 
-  const changeClickCount = function () {
-    setClickCount(clickCount + 1);
+  const changeClickCount = function (num) {
+    setClickCount(num);
   }
 
   const returnDiv = function () {
@@ -219,7 +226,7 @@ export default function SignUp() {
           </div>
         )
       }
-    } else {
+    } else if (clickCount === 2) {
       return (
         <div class="login-form">
           <h1>Please enter a username</h1>
@@ -236,6 +243,10 @@ export default function SignUp() {
           <button type="submit" class="submit-button" onClick={(e) => handleSubmit(e)}>Submit</button>
         </div>
       ) 
+    } else {
+      return (
+        <Circle />
+      )
     }
   }
 

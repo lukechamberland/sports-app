@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import Circle from "./Circle";
 
 export default function Login() {
 
@@ -82,13 +83,22 @@ export default function Login() {
     if (formData.email === '' || formData.password === '') {
       return;
     } else if (!condition) {
-      setCorrectInfoState(1)
+      setCorrectInfoState(4);
+      setTimeout(() => {
+        setCorrectInfoState(1);
+      }, 1500)
       return;
     } else if (!nextCondition) {
-      setCorrectInfoState(2)
+      setCorrectInfoState(4);
+      setTimeout(() => {
+        setCorrectInfoState(2);
+      }, 1500)
       return;
     }
-    changeNav('/home');
+    setCorrectInfoState(4);
+      setTimeout(() => {
+        changeNav('/home')
+      }, 1500)
 
   }
 
@@ -123,6 +133,9 @@ export default function Login() {
   const callStateChange = function () {
     changeEmailState();
     changePasswordState();
+    setTimeout(() => {
+      
+    })
   }
 
   const returnCorrectDiv = function () {
@@ -168,7 +181,7 @@ export default function Login() {
           </div>
         </div>
       )
-    } else {
+    } else if (correctInfoState === 2) {
       return (
         <div class="incorrect-password-div">
           <div>
@@ -176,6 +189,10 @@ export default function Login() {
             <button class="incorrect-password-button" onClick={() => changeInfoState(0)}>Try again</button>
           </div>
         </div>
+      )
+    } else {
+      return (
+        <Circle />
       )
     }
   }
