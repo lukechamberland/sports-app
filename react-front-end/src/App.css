@@ -1,33 +1,97 @@
-.App {
-  text-align: center;
+.login-form-page {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.login-form {
+  border: 0px solid rgb(0, 0, 0);
+  width: 400px;
+  height: 500px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.empty-email-input {
+  margin-top: 50px;
+  width: 325px;
+  height: 50px;
+  border: 2px solid rgba(255, 0, 0, 0.551);
+  border-radius: 5px;
+  font-size: 15px;
+  padding-left: 10px;
+  color: grey;
+}
+
+.empty-email-input::placeholder {
+  color: rgba(255, 0, 0, 0.591);
+}
+
+.email-input {
+  margin-top: 50px;
+  width: 325px;
+  height: 50px;
+  border: 2px solid rgb(226, 226, 226);
+  border-radius: 5px;
+  font-size: 15px;
+  padding-left: 10px;
+  color: grey;
+}
+
+.submit-button {
+  background-color: rgba(230, 182, 62, 0.486);
   color: white;
+  font-size: 20px;
+  border: none;
+  height: 60px;
+  border-radius: none;
+  width: 340px;
+  margin-top: 50px;
+  transition: 0.5s;
 }
 
-.App-link {
-  color: #61dafb;
+.submit-button:hover {
+  background-color: rgb(230, 183, 62)
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.first-page-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.button-container {
+  border: 2px solid rgb(189, 189, 189);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.login-signup-button {
+  padding: 5px;
+  margin: 5px;
+  height: 50px;
+  width: 300px;
+  margin-left: 25px;
+  border: none;
+  transition: 0.5s;
+}
+
+.login-signup-button:hover {
+  background-color: rgb(198, 198, 198);
+}
+
+.border {
+  margin: 25px;
+  height: 1px;
+  background-color: rgb(211, 211, 211);
+  width: 300px;
 }
