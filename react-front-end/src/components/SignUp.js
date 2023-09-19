@@ -168,7 +168,7 @@ export default function SignUp() {
     if (clickCount === 0) {
       return (
         <div class="login-form">
-          <h1>Sign up</h1>
+          <h1 style={{color: "white"}}>Sign up</h1>
           <input
             onChange={(e) => changeInput(e)}
             id="email"
@@ -200,7 +200,7 @@ export default function SignUp() {
       } else {
         return (
           <div class="login-form">
-            <h1>What's your name?</h1>
+            <h1 style={{color: "white"}}>What's your name?</h1>
             <input
               onChange={(e) => changeInput(e)}
               id="firstname"
@@ -229,7 +229,7 @@ export default function SignUp() {
     } else if (clickCount === 2) {
       return (
         <div class="login-form">
-          <h1>Please enter a username</h1>
+          <h1 style={{color: "white"}}>Please enter a username</h1>
           <input
             onChange={(e) => changeInput(e)}
             id="username"

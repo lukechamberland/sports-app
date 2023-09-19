@@ -34,7 +34,7 @@ export default function FirstPage() {
   }
 
   return (
-    <div>
+    <div class="page-background">
       {changeDisplayState()}
     </div>
   )

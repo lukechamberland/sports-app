@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   margin-top: 80px;
+  background-color: rgb(25, 25, 25);
 }
 
 .login-form {
-  border: 0px solid rgb(0, 0, 0);
+  border: 2px solid rgb(230, 183, 62);
   width: 400px;
   height: 500px;
   border-radius: 10px;
@@ -13,38 +14,39 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .empty-email-input {
   margin-top: 50px;
   width: 325px;
   height: 50px;
-  border: 2px solid rgba(255, 0, 0, 0.551);
+  border: 2px solid rgb(255, 122, 122);
   border-radius: 5px;
   font-size: 15px;
   padding-left: 10px;
   color: grey;
+  background-color: rgb(25, 25, 25);
 }
 
 .empty-email-input::placeholder {
-  color: rgba(255, 0, 0, 0.591);
+  color: rgb(255, 122, 122);
 }
 
 .email-input {
   margin-top: 50px;
   width: 325px;
   height: 50px;
-  border: 2px solid rgb(226, 226, 226);
+  border: 2px solid rgb(132, 132, 132);
   border-radius: 5px;
   font-size: 15px;
   padding-left: 10px;
   color: grey;
+  background-color: rgb(25, 25, 25);
 }
 
 .submit-button {
-  background-color: rgba(230, 182, 62, 0.486);
-  color: white;
+  background-color: rgb(255, 230, 165);
+  color: rgb(114, 114, 114);
   font-size: 20px;
   border: none;
   height: 60px;
@@ -55,7 +57,7 @@
 }
 
 .submit-button:hover {
-  background-color: rgb(230, 183, 62)
+  background-color: rgb(230, 183, 62);
 }
 
 .first-page-div {
@@ -63,10 +65,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: rgb(25, 25, 25);
 }
 
 .button-container {
-  border: 2px solid rgb(189, 189, 189);
+  border: 2px solid rgb(230, 183, 62);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -83,16 +86,18 @@
   margin-left: 25px;
   border: none;
   transition: 0.5s;
+  background-color: rgb(229, 229, 229);
+  color: rgb(111, 111, 111);
 }
 
 .login-signup-button:hover {
-  background-color: rgb(198, 198, 198);
+  background-color: rgb(255, 220, 133);
 }
 
 .border {
   margin: 25px;
   height: 1px;
-  background-color: rgb(211, 211, 211);
+  background-color: rgb(230, 183, 62);
   width: 300px;
 }
 
@@ -101,6 +106,7 @@
   justify-content: center;
   margin-top: 80px;
   align-items: column;
+  background-color: rgb(25, 25, 25);
 }
 
 .incorrect-password-button {
@@ -115,7 +121,7 @@
 }
 
 .incorrect-password-button:hover {
-  background-color: rgb(177, 177, 177);
+  background-color: rgb(255, 227, 155);
 }
 
 .incorrect-email-div {
@@ -123,6 +129,7 @@
   justify-content: center;
   margin-top: 80px;
   align-items: column;
+  background-color: rgb(25, 25, 25);
 }
 
 .incorrect-email-button {
@@ -137,7 +144,7 @@
 }
 
 .incorrect-email-button:hover {
-  background-color: rgb(177, 177, 177);
+  background-color: rgb(255, 220, 133);
 }
 
 .circle-container {
@@ -145,20 +152,21 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: rgb(25, 25, 25);
 }
 
 .circle {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
   height: 150px;
   width: 150px;
   border-radius: 100px;
-  border: 10px solid rgb(255, 255, 255);
-  border-top: 10px solid rgba(239, 223, 83, 0.629);
-  border-right: 10px solid rgba(239, 223, 83, 0.623);
-  border-bottom: 10px solid rgba(239, 223, 83, 0.623);
+  border: 10px solid rgba(255, 255, 255, 0);
+  border-top: 10px solid rgb(230, 183, 62);
+  border-right: 10px solid rgb(230, 183, 62);
+  border-bottom: 10px solid rgb(230, 183, 62);
   animation: ani 3s linear infinite;
 }
 
@@ -166,10 +174,10 @@
   height: 115px;
   width: 115px;
   border-radius: 75px;
-  border: 8px solid rgb(255, 255, 255);
-  border-top: 8px solid rgba(239, 223, 83, 0.636);
-  border-right: 8px solid rgba(239, 223, 83, 0.629);
-  border-left: 8px solid rgba(239, 223, 83, 0.629);
+  border: 8px solid rgba(255, 255, 255, 0);
+  border-top: 8px solid rgb(230, 183, 62);
+  border-right: 8px solid rgb(230, 183, 62);
+  border-left: 8px solid rgb(230, 183, 62);
   animation: ani 3s linear infinite;
 }
 
@@ -180,4 +188,16 @@
   100%{
     transform: rotate(360deg);
   }
+}
+
+.page-background {
+  background-color: rgb(255, 255, 255)
+}
+
+body {
+  background-color: rgb(25, 25, 25);
+}
+
+.login {
+  color: rgb(214, 214, 214);
 }

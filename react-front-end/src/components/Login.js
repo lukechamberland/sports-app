@@ -97,9 +97,15 @@ export default function Login() {
     }
     setCorrectInfoState(4);
       setTimeout(() => {
-        changeNav('/home')
+        changeNav('/home');
       }, 1500)
+  }
 
+  const goToSignup = function() {
+    setCorrectInfoState(4);
+    setTimeout(() => {
+      changeNav('/signup');
+    }, 500)
   }
 
   const changeEmailState = function () {
@@ -143,7 +149,7 @@ export default function Login() {
       return (
         <div class="login-form-page">
           <form class="login-form" onSubmit={handleSubmit}>
-            <h1>Login</h1>
+            <h1 class="login">Login</h1>
             <input
               onChange={(e) => changeInput(e)}
               id="email"
@@ -176,8 +182,8 @@ export default function Login() {
       return (
         <div class="incorrect-email-div">
           <div>
-            <h2>Email does not exist, please sign up.</h2>
-            <button class="incorrect-email-button" onClick={() => changeNav('/signup')}>Sign Up</button>
+            <h2 style={{color: "white"}}>Email does not exist, please sign up.</h2>
+            <button class="incorrect-email-button" onClick={() => goToSignup()}>Sign Up</button>
           </div>
         </div>
       )
@@ -185,7 +191,7 @@ export default function Login() {
       return (
         <div class="incorrect-password-div">
           <div>
-            <h2>Password is incorrect.</h2>
+            <h2 style={{color: "white"}}>Password is incorrect.</h2>
             <button class="incorrect-password-button" onClick={() => changeInfoState(0)}>Try again</button>
           </div>
         </div>
@@ -198,7 +204,7 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div class="page-background">
       {returnCorrectDiv()}
     </div>
   )
