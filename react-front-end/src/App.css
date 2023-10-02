@@ -182,10 +182,11 @@
 }
 
 @keyframes ani {
-  0%{
+  0% {
     transform: rotate(0deg);
   }
-  100%{
+
+  100% {
     transform: rotate(360deg);
   }
 }
@@ -200,4 +201,361 @@ body {
 
 .login {
   color: rgb(214, 214, 214);
+}
+
+.take-div {
+  border: 1px solid white;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding: 10px;
+  width: 100px;
+  transition: 1s;
+}
+
+.take-div:hover {
+  background-color: white;
+}
+
+.take-div-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 400px;
+  height: 400px;
+}
+
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.single-post-div {
+  margin-top: 75px;
+  margin-bottom: 100px;
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 1000px;
+  padding: 25px;
+  padding-right: 40px;
+}
+
+.post-divider {
+  margin-top: 20px;
+  background-color: white;
+  height: 1px;
+  margin-bottom: 20px;
+}
+
+.single-post-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.heart {
+  font-size: 30px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: white;
+}
+
+.heart:hover {
+  color: rgb(255, 228, 158);
+}
+
+.heart-animation {
+  font-size: 30px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: rgb(230, 183, 62);
+  animation: popup 0.6s;
+}
+
+.title-post-div {
+  display: flex;
+  position: relative;
+}
+
+.heart-animation {
+  color: rgb(230, 183, 62);
+}
+
+@keyframes popup {
+  0%,
+  100% {
+    transform: scale(1)
+  }
+
+  35%,
+  75% {
+    transform: scale(1.3)
+  }
+}
+
+.vote-change-container {
+  display: flex;
+  width: 600px;
+}
+
+.vote-change-container-hide {
+  display: none;
+}
+
+.vote-full-container {
+  display: flex;
+  justify-content: space-evenly;
+  height: 30px;
+  margin-top: 15px;
+  margin-right: 10px;
+  position: absolute;
+  right: 0%;
+}
+
+.ele {
+  margin-right: 30px;
+  margin-top: 50px;
+  margin-left: 15px;
+}
+
+.vote {
+  margin-right: 15px;
+  border: none;
+  border-radius: 2px;
+  transition: 0.3s;
+  width: 60px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.vote:hover{
+  color: rgb(255, 228, 158);
+}
+
+.average {
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+.plus {
+  border: none;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-size: 30px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.plus:hover {
+  background-color: rgb(230, 183, 62);
+}
+
+.minus {
+  position: relative;
+  border: none;
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-size: 30px;
+  border-radius: 20px;
+}
+
+.minus:hover {
+  background-color: rgb(230, 183, 62);
+}
+
+.number {
+  position: absolute;
+  top: 25%;
+  left: 12%;
+
+}
+
+.vote-input {
+  width: 375px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.score {
+  border: 1px solid rgb(255, 255, 255);
+  width: 85px;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.score-number {
+  padding-left: 5px;
+}
+.score-votes {
+  display: flex;
+}
+
+.full-vote {
+  display: flex;
+  padding: 10px;
+  padding-left: 40px;
+}
+
+.your-vote {
+  font-size: 30px;
+  width: 200px;
+  margin-top: 20px;
+}
+
+.new-border {
+  position: relative;
+  right: 35%;
+  width: 225px;
+  height: 75px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.outline {
+  display: flex;
+  position: absolute;
+  top: 25%;
+  right: 10%;
+}
+
+.check {
+  position: relative;
+  font-size: 30px;
+  right: 30%;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.check:hover {
+  color: rgb(230, 183, 62);
+}
+
+.submit-show {
+  display: flex;
+  font-size: 40px;
+  color: rgb(230, 183, 62);
+  margin-right: 10px;
+}
+
+.submit-show-text {
+  font-size: 25px;
+  color: white;
+  margin-top: 5px;
+}
+
+.submit-vote-div {
+  display: flex;
+  height: 50px;
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+}
+
+.vote-div-hide {
+  transform: scaleY(0);
+  transform-origin: top;
+  height: 0;
+  overflow: hidden;
+  overflow: hidden;
+  transition: transform 0.8s, height 0.8s;
+}
+
+.vote-div-show {
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: transform 0.8s, height 0.8s;
+  animation: dropdown 0.4s;
+}
+
+@keyframes dropdown {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.already-voted-border {
+  height: 1px;
+  background-color: white;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.liked-heart {
+  font-size: 30px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: rgb(230, 183, 62);
+}
+
+.header {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 65px;
+  background-color: white;
+}
+
+.left-side-header {
+  height: 100%;
+  width: 100px;
+}
+
+.user {
+  position: relative;
+  
+  top: 25%;
+  left: 20%;
+  z-index: 100;
+  font-size: 30px;
+  color: rgb(25, 25, 25);
+  cursor: pointer;
+  width: 30px;
+
+}
+
+.user:hover {
+  color: rgb(230, 183, 62);
+}
+
+.header-heart {
+  position: relative;
+  top: 25%;
+  right: 250%;
+  z-index: 100;
+  font-size: 30px;
+  color: rgb(25, 25, 25);
+  cursor: pointer;
+  width: 30px;
+}
+
+.header-heart:hover {
+  color: rgb(230, 183, 62);
+}
+
+.bars {
+  position: relative;
+  top: -32%;
+  right: 70%;
+  z-index: 100;
+  font-size: 30px;
+  color: rgb(25, 25, 25);
+  cursor: pointer;
+  width: 30px;
+}
+
+.bars:hover {
+  color: rgb(230, 183, 62);
 }

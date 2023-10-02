@@ -65,8 +65,18 @@ export default function Login() {
 
   const [passwordState, setPasswordState] = useState({
     password: "email-input",
-    placeholderText: "Enter a password"
+    placeholderText: "Enter your password"
   });
+
+  const returnUsername = function() {
+    let correctUsername = null;
+    for (let obj of fullData) {
+      if (obj.email === formData.email) {
+        correctUsername = obj.username;
+      }
+    }
+    return correctUsername;
+  }
 
   const changeInput = (e) => {
     const newData = { ...formData }
@@ -96,6 +106,7 @@ export default function Login() {
       return;
     }
     setCorrectInfoState(4);
+      localStorage.setItem("username", returnUsername());
       setTimeout(() => {
         changeNav('/home');
       }, 1500)
