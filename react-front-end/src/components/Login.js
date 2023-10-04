@@ -78,6 +78,16 @@ export default function Login() {
     return correctUsername;
   }
 
+  const returnName = function() {
+    let correctName = null;
+    for (let obj of fullData) {
+      if (obj.email === formData.email) {
+        correctName = obj.firstname
+      }
+    }
+    return correctName;
+  }
+
   const changeInput = (e) => {
     const newData = { ...formData }
     newData[e.target.id] = e.target.value;
@@ -107,6 +117,7 @@ export default function Login() {
     }
     setCorrectInfoState(4);
       localStorage.setItem("username", returnUsername());
+      localStorage.setItem("name", returnName());
       setTimeout(() => {
         changeNav('/home');
       }, 1500)

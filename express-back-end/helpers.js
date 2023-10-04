@@ -71,10 +71,10 @@ const changeTotalNumber = function (num, value) {
   })
 }
 
-const pushToVoters = function (num, array) {
+const pushToVoters = function (num, username) {
   return new Promise((resolve, reject) => {
-    const statement = 'UPDATE posts SET voters = $1 WHERE id = $2';
-    const values = [array, num];
+    const statement = 'UPDATE posts SET voters = ARRAY_APPEND(voters, $1) WHERE id = $2';
+    const values = [username, num];
 
     return pool.query(statement, values)
 
@@ -119,4 +119,77 @@ const deleteFromUserLikes = function(postId, username) {
   })
 }
 
-module.exports = { addToUsers, selectFromUsers, getIdValue, selectFromPosts, getObj, updateVotes, changeTotalNumber, pushToVoters, addToUserLikes, getUser, deleteFromUserLikes }
+const handlePostLikes = function(likes, id) {
+  return new Promise((resolve, reject) => {
+    const statement = 'UPDATE posts SET likes = $1 WHERE id = $2;'
+    const values = [likes, id];
+
+    pool.query(statement, values)
+    .then(result => resolve(result))
+    .catch(error => reject(error))
+  })
+}
+
+const addToPosts = function(id, title, username, take, votes, totals, voters, likes) {
+  return new Promise((resolve, reject) => {
+    const statement = 'INSERT INTO posts (id, title, username, take, votes, totals, voters, likes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);'
+    const values = [id, title, username, take, votes, totals, voters, likes];
+
+    pool.query(statement, values)
+    .then(result => resolve(result))
+    .catch(error => console.error(error))
+  })
+}
+
+const getLikesNumber = function(postId) {
+  return new Promise((resolve, reject) => {
+    const statement = 'SELECT likes FROM posts WHERE id = $1;'
+    const values = [postId];
+
+    pool.query(statement, values)
+    .then(result => resolve(result.rows[0].likes))
+    .catch(error => console.error(error))
+  })
+}
+
+const updateReplies = function(username, reply, id) {
+  return new Promise((resolve, reject) => {
+    const statement = "UPDATE posts SET replies = COALESCE(replies, ARRAY[]) || ARRAY[$1, $2] WHERE id = $3;"
+    const values = [username, reply, id]
+
+    pool.query(statement, values)
+    .then(results => resolve(results))
+    .catch(error => reject(error))
+  })
+}
+
+const fetchReplies = function() {
+  return new Promise((resolve, reject) => {
+    const statement = 'SELECT * FROM replies;'
+    pool.query(statement)
+    .then(results => resolve(results.rows))
+    .catch(error => console.error(error))
+  })
+}
+
+const postToReplies = function(id, postId, reply, username) {
+  return new Promise((resolve, reject) => {
+    const statement = "INSERT INTO replies (id, postId, reply, username) VALUES ($1, $2, $3, $4);"
+    const values = [id, postId, reply, username];
+
+    pool.query(statement, values)
+    .then(response => resolve(response))
+    .catch(error => {
+      console.error(error)
+    })
+  })
+}
+
+module.exports = { 
+  addToUsers, 
+  selectFromUsers, 
+  getIdValue, 
+  selectFromPosts, 
+  getObj, 
+  updateVotes, 
+  changeTotalNumber, pushToVoters, addToUserLikes, getUser, deleteFromUserLikes, handlePostLikes, addToPosts, getLikesNumber, updateReplies, fetchReplies, postToReplies }

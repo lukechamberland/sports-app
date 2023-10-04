@@ -9,6 +9,8 @@ import './App.css';
 import Home from './components/Home';
 import Post from './components/Post';
 import Scrollbar from './components/Scrollbar';
+import Likes from './components/Likes';
+import AddPost from './components/AddPost';
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
         <Route path="/home" element={<Home header={<Header />} />} />
         <Route path="/home/:id" element={<Post circle={<Circle />} header={<Header />} />} />
         <Route path="/circle" element={<Circle />} />
+        <Route path="/likes" element={<Likes />} />
+        <Route path="/Add" element={<AddPost />} />
       </Routes>
     </BrowserRouter>
   )

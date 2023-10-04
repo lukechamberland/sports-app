@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { faHeart } from "../icons";
 import { faCheckToSlot } from "../icons";
@@ -10,11 +10,11 @@ export default function Post(props) {
 
   const { circle, header } = props;
 
+  const [postLikes, setPostLikes] = useState(0);
+
   const [likesArray, setLikesArray] = useState([]);
 
   const [postId, setPostId] = useState(0);
-
-  const [votersArray, setVotersArray] = useState([]);
 
   const [hasUserVoted, setHasUserVoted] = useState(false);
 
@@ -38,6 +38,16 @@ export default function Post(props) {
 
   const [colorState, setColorState] = useState(0);
 
+  const [repliesState, setRepliesState] = useState([]);
+
+  const [openReply, setOpenReply] = useState(false);
+
+  const [responseState, setResponseState] = useState('');
+
+  const [placeHolderState, setPlaceHolderState] = useState('Reply...');
+
+  const [usernameState, setUsernameState] = useState('');
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -45,9 +55,11 @@ export default function Post(props) {
       setPostId(id);
       for (let ele of data.data) {
         if (ele.id == id) {
+          setUsernameState(ele.username)
           setPostPageState(ele);
           setVoteState(ele.votes);
           setInitialInputValue(ele.totals);
+          setPostLikes(ele.likes);
           if (ele.totals > 0) {
             setAverageState((ele.totals / (parseInt(ele.votes))).toFixed(2));
           } else {
@@ -62,13 +74,11 @@ export default function Post(props) {
       const correctArray = correctPost.voters;
       if (correctArray.includes(username)) {
         setHasUserVoted(true);
-      } else {
-        setVotersArray([...correctArray, username]);
       }
 
       setTimeout(() => {
         setLoadingState(false);
-      }, 800)
+      }, 500)
     })
       .catch(err => console.error(err))
   }, []);
@@ -90,14 +100,18 @@ export default function Post(props) {
     })
   }, []);
 
-  const setCorrectArray = function () {
-    const username = localStorage.getItem("username");
-    if (!votersArray.includes(username)) {
-      setVotersArray(prev => [...prev, username]);
-    } else {
-      return;
-    }
-  }
+  useEffect(() => {
+    Axios.get("/api/replies")
+      .then(data => {
+        const commentArray = [];
+        for (let obj of data.data) {
+          if (obj.postid == id) {
+            commentArray.push(obj);
+          }
+        }
+        setRepliesState(commentArray);
+      })
+  }, []);
 
   const triggerVote = function () {
     setLoadingState(true);
@@ -106,16 +120,16 @@ export default function Post(props) {
 
     setTimeout(() => {
       setLoadingState(false);
-      console.log(votersArray)
     }, 2000);
 
     const newVal = inputValue + initialInputValue;
     setVoteState(voteState + 1);
     const id = JSON.parse(localStorage.getItem("id"));
     Axios.post(`/api/posts/${id}`, {
+      like: false,
       vote: newVal,
       id: JSON.parse(localStorage.getItem("id")),
-      array: votersArray
+      username: localStorage.getItem("username")
     }).then(response => {
       console.log(response)
     }).catch(error => console.log(error))
@@ -123,11 +137,10 @@ export default function Post(props) {
 
   const sendVoteObj = function () {
     setHasUserVoted(true);
-    setCorrectArray();
     triggerVote();
     setAverageState(((inputValue + initialInputValue) / (voteState + 1)).toFixed(2));
   }
-  
+
   const isClicked = function () {
     if (likesArray.includes(parseInt(id, 10))) {
       if (colorState === 1) {
@@ -167,7 +180,7 @@ export default function Post(props) {
       if (hasUserVoted) {
         return (
           <div>
-            <div style={{fontSize: "25px"}}>You have already voted</div>
+            <div style={{ fontSize: "25px" }}>You have already voted</div>
             <div class="already-voted-border"></div>
           </div>
         )
@@ -215,23 +228,29 @@ export default function Post(props) {
     setSubmit(submit + 1);
   }
 
-  const increaseColorState = function() {
+  const increaseColorState = function () {
     setColorState(colorState + 1);
   }
 
-  const readColorState = function() {
+  const readColorState = function () {
     const username = localStorage.getItem("username");
     if (colorState % 2 === 0) {
       increaseColorState();
       Axios.post(`/api/users/${id}`, {
         add: true,
         postId: postId,
-        username: username
+        username: username,
       })
-      .then(response => { 
-        console.log(response);
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => console.error(error))
+      ////
+      setPostLikes(postLikes + 1);
+      Axios.post(`/api/posts/${id}`, {
+        like: true,
+        plus: true
       })
-      .catch(error => console.error(error))
     } else {
       increaseColorState();
       Axios.post(`/api/users/${id}`, {
@@ -239,10 +258,64 @@ export default function Post(props) {
         postId: postId,
         username: username
       })
-      .then(result => { 
-        console.log(result);
+        .then(result => {
+          console.log(result);
+        })
+        .catch(error => console.error(error))
+      ////
+      setPostLikes(postLikes - 1);
+      Axios.post(`/api/posts/${id}`, {
+        like: true,
+        plus: false
       })
-      .catch(error => console.error(error))
+    }
+  }
+
+  const changeCommentState = function (e) {
+    setResponseState(e.target.value);
+  }
+
+  const postReply = function () {
+    const username = localStorage.getItem("username")
+    if (responseState === '') {
+      setPlaceHolderState("Reply field cannot be left empty...");
+      return;
+    } else {
+      Axios.post(`/api/replies`, {
+        postId,
+        username,
+        reply: responseState,
+      })
+    }
+  }
+
+  const readReplyState = function () {
+    if (openReply) {
+      return (
+        <div>
+          <textarea class="reply-textarea" placeholder={placeHolderState} onChange={(e) => changeCommentState(e)}>
+
+          </textarea>
+          <button class="post-reply" onClick={() => postReply()}><FontAwesomeIcon icon={faCheck} /></button>
+        </div>
+      )
+    }
+  }
+
+  const returnRepliesState = function () {
+    console.log(repliesState)
+    const data = repliesState.map((obj) => (
+      <div class="reply-itself">
+        <div>{obj.username}</div>
+        <div>{obj.reply}</div>
+      </div>
+    ))
+    if (repliesState.length === 0) {
+      return (
+        <div>no replies yet :(</div>
+      )
+    } else {
+      return data;
     }
   }
 
@@ -258,7 +331,7 @@ export default function Post(props) {
             <div style={{ color: "white" }} class="single-post-div">
               <div class="title-post-div">
                 <div>
-                  <h1>{postPageState.title}</h1>
+                  <h1 class="post-title" onClick={() => console.log(repliesState)}>{postPageState.title}</h1>
                   <div style={{ width: "450px" }} class="post-divider"></div>
                   <div class="score-votes">
                     {returnScore()}
@@ -283,6 +356,15 @@ export default function Post(props) {
               <div>{postPageState.take}</div>
               <div style={{ height: "25px" }}></div>
             </div>
+          </div>
+          <div class="reply-div">
+            <div class="inner-div">
+              <button class="reply" onClick={() => setOpenReply(true)}>Reply?</button>
+              <div>{readReplyState()}</div>
+            </div>
+          </div>
+          <div class="replies-container">
+            <div class="show-replies">{returnRepliesState()}</div>
           </div>
         </div>
       )

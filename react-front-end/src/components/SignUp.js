@@ -79,6 +79,7 @@ export default function SignUp() {
       })
         .then((data) => {
           localStorage.setItem("username", formData.username);
+          localStorage.setItem("name", formData.name);
           console.log(data);
           changeClickCount(4);
           setTimeout(() => {

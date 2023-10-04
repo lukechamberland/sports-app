@@ -204,16 +204,20 @@ body {
 }
 
 .take-div {
+  color: white;
   border: 1px solid white;
   border-radius: 10px;
   margin-bottom: 30px;
   padding: 10px;
   width: 100px;
   transition: 1s;
+  cursor: pointer;
 }
 
 .take-div:hover {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(230, 183, 62);
+  color: rgb(230, 183, 62);
 }
 
 .take-div-container {
@@ -233,7 +237,7 @@ body {
 
 .single-post-div {
   margin-top: 75px;
-  margin-bottom: 100px;
+  margin-bottom: 25px;
   border: 2px solid white;
   border-radius: 5px;
   width: 1000px;
@@ -371,7 +375,6 @@ body {
   position: absolute;
   top: 25%;
   left: 12%;
-
 }
 
 .vote-input {
@@ -515,15 +518,13 @@ body {
 
 .user {
   position: relative;
-  
-  top: 25%;
+  top: -28%;
   left: 20%;
   z-index: 100;
   font-size: 30px;
   color: rgb(25, 25, 25);
   cursor: pointer;
   width: 30px;
-
 }
 
 .user:hover {
@@ -531,10 +532,6 @@ body {
 }
 
 .header-heart {
-  position: relative;
-  top: 25%;
-  right: 250%;
-  z-index: 100;
   font-size: 30px;
   color: rgb(25, 25, 25);
   cursor: pointer;
@@ -546,10 +543,6 @@ body {
 }
 
 .bars {
-  position: relative;
-  top: -32%;
-  right: 70%;
-  z-index: 100;
   font-size: 30px;
   color: rgb(25, 25, 25);
   cursor: pointer;
@@ -558,4 +551,298 @@ body {
 
 .bars:hover {
   color: rgb(230, 183, 62);
+}
+
+.likes-obj {
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  height: 100px;
+  width: 100px;
+  border: 1px solid white;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.likes-obj:hover {
+  background-color: white;
+}
+
+.likes-div {
+  display: block;
+  justify-content: center;
+}
+
+.likes-heart {
+  font-size: 100px;
+  color: rgb(230, 183, 62);
+}
+
+.likes-heart-container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-post-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.house {
+  font-size: 30px;
+  position: relative;
+  top: 25%;
+  left: 70%;
+  width: 25px;
+  cursor: pointer;
+}
+
+.house:hover {
+  color: rgb(230, 183, 62);
+}
+
+.likes-ele {
+  color: white;
+  border: 1px solid white;
+  width: 400px;
+  height: 100px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.likes-ele:hover {
+  background-color: rgb(122, 122, 122);
+}
+
+.likes-div-title {
+  font-size: 20px;
+  color: rgb(230, 183, 62);
+}
+
+.likes-div-username {
+  color: white;
+  margin-top: 5px;
+}
+
+.likes-div-take {
+  color: grey;
+  margin-top: 10px;
+}
+
+.title-likes-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.number-of-likes {
+  color: rgb(230, 183, 62);
+}
+
+.no-liked-posts {
+  color: white;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.hello-first-name {
+  position: relative;
+  top: -85%;
+  left: 175%;
+  font-size: 30px;
+  width: 200px;
+  font-weight: 600;
+}
+
+.header-plus {
+  font-size: 30px;
+  top: -7%;
+  cursor: pointer;
+  width: 30px;
+}
+
+.header-plus:hover {
+  color: rgb(230, 183, 62);
+}
+
+.header-input {
+  height: 30px;
+  width: 250px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(160, 160, 160);
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.header-input:hover {
+  border: 2px solid rgb(230, 183, 62);
+}
+
+.header-input:focus {
+  outline: none;
+}
+
+.right-side-header {
+  width: 450px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 25px;
+}
+
+.right-side-header-right {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  margin-top: 3px;
+}
+
+.add-post-form {
+  margin-top: 150px;
+  border: 2px solid rgb(230, 183, 62);
+  border-radius: 20px;
+  height: 650px;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-post {
+  display: flex;
+  justify-content: center;
+}
+
+.add-title {
+  padding: 10px;
+  margin-bottom: 20px;
+  height: 30px;
+  font-size: 20px;
+  background-color: rgb(25, 25, 25);
+  border: none;
+  border: 1px solid rgb(117, 117, 117);
+  border-radius: 10px;
+  color: white;
+  width: 400px;
+}
+
+.add-new-take {
+  background-color: rgb(25, 25, 25);
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 700px;
+  height: 400px;
+  font-size: 15px;
+}
+
+.submit-post {
+  color: rgb(49, 49, 49);
+  font-size: 15px;
+  margin-top: 25px;
+  width: 300px;
+  height: 50px;
+  background-color: rgb(230, 183, 62);
+  border: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-post:hover {
+  background-color: rgb(241, 212, 138);
+}
+
+.post-title {
+  margin-right: 200px;
+}
+
+.reply {
+  height: 50px;
+  width: 300px;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(230, 183, 62);
+  transition: 0.3s
+}
+
+.reply:hover {
+  background-color: rgb(241, 212, 138);
+}
+
+.reply-div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100px;
+  margin-top: 20px;
+}
+
+.inner-div {
+  width: 1065px
+}
+
+.reply-textarea {
+  width: 98.5%;
+  height: 200px;
+  background-color: rgb(25, 25, 25);
+  resize: none;
+  border-radius: 5px;
+  margin-top: 25px;
+  padding: 10px;
+  font-size: 17.5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.reply-textarea:hover {
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.reply-textarea:focus {
+  outline: none;
+}
+
+.post-reply {
+  height: 50px;
+  width: 50px;
+  margin-top: 10px;
+  border: none;
+  font-size: 17.5px;
+  background-color: rgb(25, 25, 25);
+  border: 1px solid grey;
+  color: grey;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.post-reply:hover {
+  color: rgb(230, 183, 62);
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.replies-container {
+  display: flex;
+  justify-content: center;
+}
+
+.show-replies {
+  color: white;
+  width: 1000px;
+  padding: 25px;
+  padding-right: 40px;
+  border-radius: 5px;
+  margin-bottom: 100px;
 }

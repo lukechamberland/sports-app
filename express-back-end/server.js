@@ -13,7 +13,13 @@ const { addToUsers,
   pushToVoters,
   addToUserLikes,
   getUser,
-  deleteFromUserLikes } = require('./helpers');
+  deleteFromUserLikes,
+  handlePostLikes,
+  addToPosts,
+  getLikesNumber,
+  updateReplies,
+  fetchReplies,
+  postToReplies } = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -58,24 +64,49 @@ app.get("/api/posts/:id", (req, res) => {
 app.post("/api/posts/:id", (req, res) => {
   const postId = req.params.id;
   const total = req.body.vote;
-  const array = req.body.array;
   const id = req.body.id;
+  const like = req.body.like;
+  const username = req.body.username;
+  const plus = req.body.plus;
+  const reply = req.body.reply;
 
-  updateVotes(postId)
-    .then((result => console.log(result)))
-    .catch(error => console.error(error))
+  if (reply) {
+    updateReplies(username, reply, id)
+      .then(response => console.log(response))
+      .catch(error => console.error(error))
+  } else {
+    if (like) {
+      if (plus) {
+        getLikesNumber(postId).then(num => {
+          const newNum = num + 1;
+          handlePostLikes(newNum, postId)
+        })
+          .then(result => console.log(result))
+          .catch(error => console.error(error))
+      } else {
+        getLikesNumber(postId).then(num => {
+          const newNum = num - 1;
+          handlePostLikes(newNum, postId);
+        })
+          .then(result => console.log(result))
+          .catch(error => console.error(error))
+      }
+    } else {
+      updateVotes(postId)
+        .then((result => console.log(result)))
+        .catch(error => console.error(error))
 
-  changeTotalNumber(postId, total)
-    .then(result => console.log(result))
-    .catch((error) => console.error(error))
+      changeTotalNumber(postId, total)
+        .then(result => console.log(result))
+        .catch((error) => console.error(error))
 
-  pushToVoters(id, array)
-    .then(result => {
-      console.log(result)
-      console.log(array);
-      console.log(id);
-    })
-    .catch(error => console.error(error))
+      pushToVoters(id, username)
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => console.error(error))
+    }
+  }
 })
 
 app.get("/api/users/:id", (req, res) => {
@@ -99,6 +130,39 @@ app.post("/api/users/:id", (req, res) => {
       .then(result => console.log(result))
       .catch(error => console.error(error))
   }
+})
+
+app.post("/api/posts", (req, res) => {
+  const username = req.body.username;
+  const title = req.body.title;
+  const take = req.body.take;
+  const votes = 0;
+  const totals = 0;
+  const likes = 0;
+  const voters = [];
+
+  selectFromPosts().then(array => {
+    const id = array.length + 1;
+    addToPosts(id, title, username, take, votes, totals, voters, likes)
+  })
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
+})
+
+app.get("/api/replies", (req, res) => {
+  fetchReplies().then(response => res.json(response)).catch(error => console.error(error));
+});
+
+app.post("/api/replies", (req, res) => {
+  const postId = req.body.postId;
+  const reply = req.body.reply;
+  const username = req.body.username;
+
+  fetchReplies().then(result => {
+    const id = result.length + 1;
+    postToReplies(id, postId, reply, username)
+  })
+  .catch(error => { console.error(error) })
 })
 
 app.listen(PORT, () => {
