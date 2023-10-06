@@ -44,6 +44,11 @@
   background-color: rgb(25, 25, 25);
 }
 
+.email-input:focus {
+  outline: none;
+  border: 2px solid rgb(230, 183, 62);
+}
+
 .submit-button {
   background-color: rgb(255, 230, 165);
   color: rgb(114, 114, 114);
@@ -54,6 +59,7 @@
   width: 340px;
   margin-top: 50px;
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .submit-button:hover {
@@ -88,6 +94,7 @@
   transition: 0.5s;
   background-color: rgb(229, 229, 229);
   color: rgb(111, 111, 111);
+  cursor: pointer;
 }
 
 .login-signup-button:hover {
@@ -236,7 +243,7 @@ body {
 }
 
 .single-post-div {
-  margin-top: 75px;
+  margin-top: 150px;
   margin-bottom: 25px;
   border: 2px solid white;
   border-radius: 5px;
@@ -352,6 +359,7 @@ body {
   font-size: 30px;
   height: 40px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .plus:hover {
@@ -365,6 +373,7 @@ body {
   color: white;
   font-size: 30px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .minus:hover {
@@ -731,10 +740,17 @@ body {
   font-size: 20px;
   background-color: rgb(25, 25, 25);
   border: none;
-  border: 1px solid rgb(117, 117, 117);
-  border-radius: 10px;
+  border-bottom: 1px solid rgb(117, 117, 117);
   color: white;
   width: 400px;
+}
+
+.add-title:hover {
+  border-bottom: 1px solid rgb(230, 183, 62);
+}
+
+.add-title:focus {
+  outline: none;
 }
 
 .add-new-take {
@@ -746,6 +762,14 @@ body {
   width: 700px;
   height: 400px;
   font-size: 15px;
+}
+
+.add-new-take:hover {
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.add-new-take:focus {
+  outline: none;
 }
 
 .submit-post {
@@ -786,7 +810,7 @@ body {
 .reply-div {
   display: flex;
   justify-content: center;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   margin-top: 20px;
 }
 
@@ -840,9 +864,157 @@ body {
 
 .show-replies {
   color: white;
-  width: 1000px;
-  padding: 25px;
-  padding-right: 40px;
-  border-radius: 5px;
+  width: 1070px;
   margin-bottom: 100px;
+}
+
+.reply-comment {
+  border: 1px solid grey;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  width: 95.5%;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.zero-replies {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  border-top: 1px solid rgb(230, 183, 62);
+  padding-top: 25px;
+}
+
+.reply-username {
+  margin-bottom: 30px;
+  color: rgb(230, 183, 62);
+  display: flex;
+  justify-content: space-between;
+}
+
+.full-reply {
+  color: white;
+  border: 1px solid rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.nested-reply-input:focus {
+  outline: none;
+}
+
+.nested-reply-input:hover {
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.nested-reply-input {
+  border: 1px solid grey;
+}
+
+.nested-reply-button {
+  margin-top: 20px;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(25, 25, 25);
+  border: 1px solid grey;
+  border-radius: 5px;
+  color: grey;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.nested-reply-button:hover {
+  color: rgb(230, 183, 62);
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.all-replies-comment {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.all-replies-comment:hover {
+  color: rgb(230, 183, 62);
+}
+
+.view-conversation-reply-button {
+  margin-right: 20px;
+  background-color: rgb(25, 25, 25);
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.view-conversation-reply-button:hover {
+  color: rgb(230, 183, 62);
+}
+
+.reply-to-nested {
+  border: 1px solid grey;
+  height: 50px;
+  width: 75%;
+  resize: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(25, 25, 25);
+  color: grey;
+  margin-top: 15px;
+}
+
+.reply-to-nested:focus {
+  outline: none;
+}
+
+.reply-to-nested-div {
+  display: flex;
+  justify-content: center;
+}
+
+.inner-nested-div {
+  width: 100%;
+}
+
+.view-conversation-reply-button-no-replies {
+  margin-right: 20px;
+  background-color: rgb(25, 25, 25);
+  padding: 5px;
+  color: white;
+  border: none;
+}
+
+.bars-full-div {
+  border: 1px solid white;
+  width: 300px;
+  height: 500px;
+  position: fixed;
+  right: 0%;
+  top: 9%;
+  background-color: white;
+  z-index: 1000;
+}
+
+.each-bar-div {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.each-bar-div:hover {
+  background-color: rgb(202, 202, 202);
+}
+
+.your-take {
+  padding: 20px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  color: white;
+  width: 300px;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.your-take:hover {
+  background-color: rgb(42, 42, 42);
 }

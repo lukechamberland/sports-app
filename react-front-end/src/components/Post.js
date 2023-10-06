@@ -5,50 +5,40 @@ import { faHeart } from "../icons";
 import { faCheckToSlot } from "../icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from "../icons";
+import { faComment } from "../icons";
 
 export default function Post(props) {
 
   const { circle, header } = props;
 
   const [postLikes, setPostLikes] = useState(0);
-
   const [likesArray, setLikesArray] = useState([]);
-
   const [postId, setPostId] = useState(0);
-
   const [hasUserVoted, setHasUserVoted] = useState(false);
-
   const [isSubmit, setIsSubmit] = useState(false);
-
   const [submit, setSubmit] = useState(1);
-
   const [showDiv, setShowDiv] = useState("vote-div-hide");
-
   const [averageState, setAverageState] = useState(0);
-
   const [voteState, setVoteState] = useState([]);
-
   const [initialInputValue, setInitialInputValue] = useState('');
-
   const [inputValue, setInputValue] = useState(5);
-
   const [postPageState, setPostPageState] = useState([]);
-
   const [loadingState, setLoadingState] = useState(true);
-
   const [colorState, setColorState] = useState(0);
-
   const [repliesState, setRepliesState] = useState([]);
-
-  const [openReply, setOpenReply] = useState(false);
-
+  const [openReply, setOpenReply] = useState(0);
   const [responseState, setResponseState] = useState('');
-
   const [placeHolderState, setPlaceHolderState] = useState('Reply...');
-
   const [usernameState, setUsernameState] = useState('');
+  const [replyLikes, setReplyLikes] = useState([]);
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
+  const changeNavigation = function (route) {
+    navigate(route);
+  }
 
   useEffect(() => {
     Axios.get("/api/posts").then((data) => {
@@ -104,12 +94,21 @@ export default function Post(props) {
     Axios.get("/api/replies")
       .then(data => {
         const commentArray = [];
+        const valuesArray = [];
+        const username = localStorage.getItem("username");
         for (let obj of data.data) {
           if (obj.postid == id) {
             commentArray.push(obj);
+            console.log(obj.likers)
+            if (obj.likers.includes(username)) {
+              valuesArray.push(1);
+            } else {
+              valuesArray.push(0);
+            }
           }
         }
-        setRepliesState(commentArray);
+        setReplyLikes(valuesArray);
+        setRepliesState(commentArray.sort((a, b) => b.likes - a.likes));
       })
   }, []);
 
@@ -276,21 +275,28 @@ export default function Post(props) {
   }
 
   const postReply = function () {
-    const username = localStorage.getItem("username")
+    const username = localStorage.getItem("username");
     if (responseState === '') {
       setPlaceHolderState("Reply field cannot be left empty...");
       return;
     } else {
+      setLoadingState(true);
+      setTimeout(() => {
+        setLoadingState(false);
+      }, 800);
+      window.location.reload();
       Axios.post(`/api/replies`, {
         postId,
         username,
         reply: responseState,
+        replying: true
       })
+        .then(() => changeNavigation(`/home/${id}`))
     }
   }
 
   const readReplyState = function () {
-    if (openReply) {
+    if (openReply % 2 !== 0) {
       return (
         <div>
           <textarea class="reply-textarea" placeholder={placeHolderState} onChange={(e) => changeCommentState(e)}>
@@ -298,24 +304,102 @@ export default function Post(props) {
           </textarea>
           <button class="post-reply" onClick={() => postReply()}><FontAwesomeIcon icon={faCheck} /></button>
         </div>
-      )
+      );
+    } else {
+      return;
     }
   }
 
+  const changeReplyLikes = function (objectId, index) {
+    const username = localStorage.getItem("username");
+    if (replyLikes[index] % 2 === 0) {
+      addRepliesState(objectId);
+      addReplyLikes(index);
+      Axios.post('/api/replies', {
+        objectId,
+        like: true,
+        isReplyLike: true,
+        username
+      })
+        .then(() => console.log("request sent!"))
+        .catch(() => console.log("request failed"))
+    } else {
+      subtractRepliesState(objectId);
+      subtractReplyLikes(index);
+      Axios.post('/api/replies', {
+        objectId,
+        like: false,
+        isReplyLike: true,
+        username
+      })
+        .then(() => console.log("request sent!"))
+        .catch(() => console.log("request failed"))
+    }
+  }
+
+  const addRepliesState = function (objectId) {
+    const correctObj = repliesState.find((obj) => obj.id === objectId);
+    const correctIndex = repliesState.indexOf(correctObj);
+    const newArray = [
+      ...repliesState,
+    ]
+    newArray[correctIndex].likes = newArray[correctIndex].likes + 1;
+    setRepliesState(newArray);
+  }
+
+  const subtractRepliesState = function (objectId) {
+    const correctObj = repliesState.find((obj) => obj.id === objectId);
+    const correctIndex = repliesState.indexOf(correctObj);
+    const newArray = [
+      ...repliesState,
+    ]
+    newArray[correctIndex].likes = newArray[correctIndex].likes - 1;
+    setRepliesState(newArray);
+  }
+
+  const addReplyLikes = function (index) {
+    const newReplyLikesArray = [...replyLikes];
+    newReplyLikesArray[index] += 1;
+    setReplyLikes(newReplyLikesArray);
+  }
+
+  const subtractReplyLikes = function (index) {
+    const newReplyLikesArray = [...replyLikes];
+    newReplyLikesArray[index] -= 1;
+    setReplyLikes(newReplyLikesArray);
+  }
+
+  console.log("this is the reply state: ", repliesState)
+  console.log("This is the rreply likes: ", replyLikes)
+
   const returnRepliesState = function () {
-    console.log(repliesState)
-    const data = repliesState.map((obj) => (
-      <div class="reply-itself">
-        <div>{obj.username}</div>
+    const data = repliesState.map((obj, index) => (
+      <div class="reply-comment">
+        <div class="reply-username">
+          <div>@ {obj.username}</div>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginRight: "25px", color: "grey"}} onClick={() => changeNavigation(`/home/${id}/replies/${obj.id}`)}><FontAwesomeIcon icon={faComment} /></div>
+            <div style={{ marginRight: "5px", cursor: "pointer" }}>
+              <div onClick={() => changeReplyLikes(obj.id, index)} style={{ color: replyLikes[index] % 2 === 0 ? "grey" : "rgb(230, 183, 62)" }}>
+                <FontAwesomeIcon icon={faHeart} />
+              </div>
+            </div>
+            <div style={{ color: "grey" }}>{obj.likes}</div>
+          </div>
+        </div>
         <div>{obj.reply}</div>
       </div>
     ))
     if (repliesState.length === 0) {
       return (
-        <div>no replies yet :(</div>
+        <div class="zero-replies" >no replies yet :(</div>
       )
     } else {
-      return data;
+      return (
+        <div class="replies-data">
+          {data}
+        </div>
+      )
     }
   }
 
@@ -331,7 +415,7 @@ export default function Post(props) {
             <div style={{ color: "white" }} class="single-post-div">
               <div class="title-post-div">
                 <div>
-                  <h1 class="post-title" onClick={() => console.log(repliesState)}>{postPageState.title}</h1>
+                  <h1 class="post-title" onClick={() => console.log(replyLikes)}>{postPageState.title}<div style={{ color: "rgb(120, 120, 120)", fontSize: "20px", marginTop: "5px", fontWeight: "300" }}>@ {postPageState.username}</div></h1>
                   <div style={{ width: "450px" }} class="post-divider"></div>
                   <div class="score-votes">
                     {returnScore()}
@@ -359,7 +443,7 @@ export default function Post(props) {
           </div>
           <div class="reply-div">
             <div class="inner-div">
-              <button class="reply" onClick={() => setOpenReply(true)}>Reply?</button>
+              <button class="reply" onClick={() => setOpenReply(openReply + 1)}>Add a reply</button>
               <div>{readReplyState()}</div>
             </div>
           </div>

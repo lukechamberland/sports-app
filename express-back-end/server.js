@@ -19,7 +19,10 @@ const { addToUsers,
   getLikesNumber,
   updateReplies,
   fetchReplies,
-  postToReplies } = require('./helpers');
+  postToReplies,
+  addLikeToReply,
+  pushUsernameToReplyLikes,
+  removeUsernameFromReplies } = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -141,8 +144,19 @@ app.post("/api/posts", (req, res) => {
   const likes = 0;
   const voters = [];
 
+  const returnId = function(arr) {
+    let highest = 0;
+    for (let obj of arr) {
+      if (highest < obj.id) {
+        highest = obj.id;
+      }
+    }
+    const newHighest = highest + 1;
+    return newHighest;
+  }
+
   selectFromPosts().then(array => {
-    const id = array.length + 1;
+    const id = returnId(array);
     addToPosts(id, title, username, take, votes, totals, voters, likes)
   })
     .then(result => console.log(result))
@@ -150,19 +164,45 @@ app.post("/api/posts", (req, res) => {
 })
 
 app.get("/api/replies", (req, res) => {
-  fetchReplies().then(response => res.json(response)).catch(error => console.error(error));
+  fetchReplies().then(response => res.json(response.sort((a, b) => b.id - a.id))).catch(error => console.error(error));
 });
 
 app.post("/api/replies", (req, res) => {
   const postId = req.body.postId;
   const reply = req.body.reply;
   const username = req.body.username;
+  const like = req.body.like;
+  const objectId = req.body.objectId;
+  const isReplyLike = req.body.isReplyLike;
+  const replying = req.body.replying;
 
-  fetchReplies().then(result => {
-    const id = result.length + 1;
-    postToReplies(id, postId, reply, username)
-  })
-  .catch(error => { console.error(error) })
+  if (isReplyLike) {
+    if (like) {
+      addLikeToReply(objectId, like)
+        .then(results => console.log(results))
+        .catch(error => console.error(error))
+
+      pushUsernameToReplyLikes(username, objectId)
+        .then(result => console.log(result))
+        .catch(error => console.error(error))
+    } else {
+      addLikeToReply(objectId, like)
+      .then(response => console.log(response))
+      .catch(error => console.error(error))
+
+      removeUsernameFromReplies(username, objectId)
+    }
+  } else {
+    fetchReplies().then(result => {
+      const id = result.length + 1;
+      if (replying) {
+        postToReplies(id, postId, reply, username, true);
+      } else {
+        postToReplies(id, postId, reply, username, false);
+      }
+    })
+      .catch(error => { console.error(error) })
+  }
 })
 
 app.listen(PORT, () => {

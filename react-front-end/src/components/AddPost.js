@@ -21,27 +21,43 @@ export default function AddPost() {
     }, 1000);
   }, [])
 
-  const changeNavigation = function(route) {
+  const changeNavigation = function (route) {
     navigate(route);
-  } 
+  }
 
-  const changeState = function(e, state) {
+  const changeState = function (e, state) {
     state(e.target.value);
   }
 
-  const post = function() {
+  const checkTake = function (string) {
+    const splitString = string.split(' ');
+    for (let str of splitString) {
+      if (str.length > 35) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  const post = function () {
     const username = localStorage.getItem("username");
-    changeNavigation('/home')
-    Axios.post("/api/posts", {
-      username: username,
-      title: title,
-      take: take
-    })
-    .then(response => {
-      console.log(response)
-    })
-    
-    .catch(error => console.error(error))
+    if (!checkTake(title) || !checkTake(take)) {
+      alert("Invalid input.  Please ensure that your title/take have no words with more than 35 charachters");
+      return;
+    } else {
+      changeNavigation('/home')
+      Axios.post("/api/posts", {
+        username: username,
+        title: title,
+        take: take
+      })
+        .then(response => {
+          console.log(response)
+        })
+
+        .catch(error => console.error(error))
+    }
   }
 
   const returnState = function () {
@@ -58,14 +74,14 @@ export default function AddPost() {
                 onChange={(e) => changeState(e, setTitle)}
               />
 
-              <textarea style={{ resize: "none" }} 
+              <textarea style={{ resize: "none" }}
                 class="add-new-take"
                 placeholder="your take..."
                 id="take"
                 onChange={(e) => changeState(e, setTake)}
-                ></textarea>
+              ></textarea>
 
-                <button type="submit" class="submit-post" onClick={() => post()}>post</button>
+              <button type="submit" class="submit-post" onClick={() => post()}>post</button>
             </form>
           </div>
         </div>

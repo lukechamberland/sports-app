@@ -62,21 +62,40 @@ export default function Likes() {
   const reduceTake = function (take) {
     const newArray = [];
     const newTake = take.split('');
-    for (let i = 0; i < 100; i++) {
-      newArray.push(newTake[i]);
+    if (newTake.length < 100) {
+      return take;
+    } else {
+      for (let i = 0; i < 100; i++) {
+        newArray.push(newTake[i]);
+      }
+      const lastArray = newArray.join('');
+      return lastArray + '...';
     }
-    return newArray.join('');
+  }
+
+  const reduceTitle = function (title) {
+    const newArray = [];
+    const newTitle = title.split('');
+    if (newTitle.length < 40) {
+      return title;
+    } else {
+      for (let i = 0; i < 40; i++) {
+        newArray.push(newTitle[i]);
+      }
+      const lastArray = newArray.join('');
+      return lastArray + '...';
+    }
   }
 
   const returnEvenLikedPosts = function () {
     return evenLikedPosts.map((ele) => (
       <div class="likes-ele" onClick={() => changeNav(`/home/${ele.id}`)}>
         <div class="title-likes-container">
-          <div class="likes-div-title">{ele.title}</div>
+          <div class="likes-div-title">{reduceTitle(ele.title)}</div>
           <div class="number-of-likes"><FontAwesomeIcon icon={faHeart} /> {ele.likes}</div>
         </div>
         <div class="likes-div-username">{ele.username}</div>
-        <div class="likes-div-take">{reduceTake(ele.take)}...</div>
+        <div class="likes-div-take">{reduceTake(ele.take)}</div>
       </div>
     ))
   }
@@ -99,9 +118,9 @@ export default function Likes() {
       if (likesArray.length === 0) {
         return (
           <div>
-             <div><Header /></div>
-             <div class="likes-heart" style={{ marginTop: "200px", display: "flex", justifyContent: "center" }}>{<FontAwesomeIcon icon={faHeart} />}</div>
-             <h1 class="no-liked-posts">No liked posts yet :(</h1>
+            <div><Header /></div>
+            <div class="likes-heart" style={{ marginTop: "200px", display: "flex", justifyContent: "center" }}>{<FontAwesomeIcon icon={faHeart} />}</div>
+            <h1 class="no-liked-posts">No liked posts yet :(</h1>
           </div>
         )
       } else {

@@ -34,7 +34,7 @@ const selectFromPosts = function () {
     const statement = 'SELECT * FROM posts;'
     pool.query(statement)
       .then(result => resolve(result.rows))
-      .catch(error => console.error(error))
+      .catch(error => console.log(error))
   })
 }
 
@@ -137,7 +137,7 @@ const addToPosts = function(id, title, username, take, votes, totals, voters, li
 
     pool.query(statement, values)
     .then(result => resolve(result))
-    .catch(error => console.error(error))
+    .catch(error => console.log(error))
   })
 }
 
@@ -172,16 +172,57 @@ const fetchReplies = function() {
   })
 }
 
-const postToReplies = function(id, postId, reply, username) {
+const postToReplies = function(id, postId, reply, username, bool) {
   return new Promise((resolve, reject) => {
-    const statement = "INSERT INTO replies (id, postId, reply, username) VALUES ($1, $2, $3, $4);"
-    const values = [id, postId, reply, username];
+    const statement = "INSERT INTO replies (id, postId, reply, username, likes, likers, post) VALUES ($1, $2, $3, $4, 0, ARRAY[]::TEXT[], $5);"
+    const values = [id, postId, reply, username, bool];
 
     pool.query(statement, values)
     .then(response => resolve(response))
     .catch(error => {
       console.error(error)
     })
+  })
+}
+
+const returnOperator = function(val) {
+  if (val) {
+    return '+'
+  } else {
+    return '-'
+  }
+}
+
+const addLikeToReply = function(objectId, like) {
+  return new Promise((resolve, reject) => {
+    const statement = `UPDATE replies SET likes = likes ${returnOperator(like)} 1 WHERE id = $1;`
+    const values = [objectId];
+
+    pool.query(statement, values)
+    .then(response => resolve(response))
+    .catch(error => console.error(error))
+  })
+}
+
+const pushUsernameToReplyLikes = function(username, id) {
+  return new Promise((resolve, reject) => {
+    const statement = 'UPDATE replies SET likers = ARRAY_APPEND(likers, $1) WHERE id = $2;'
+    const values = [username, id];
+
+    pool.query(statement, values)
+    .then(result => resolve(result))
+    .catch(error => console.log(error))
+  })
+}
+
+const removeUsernameFromReplies = function(username, id) {
+  return new Promise((resolve, reject) => {
+    const statement = 'UPDATE replies SET likers = ARRAY_REMOVE(likers, $1) WHERE id = $2;'
+    const values = [username, id];
+
+    pool.query(statement, values)
+    .then(results => resolve(results))
+    .catch(error => console.error(error))
   })
 }
 
@@ -192,4 +233,17 @@ module.exports = {
   selectFromPosts, 
   getObj, 
   updateVotes, 
-  changeTotalNumber, pushToVoters, addToUserLikes, getUser, deleteFromUserLikes, handlePostLikes, addToPosts, getLikesNumber, updateReplies, fetchReplies, postToReplies }
+  changeTotalNumber, 
+  pushToVoters, 
+  addToUserLikes, 
+  getUser, 
+  deleteFromUserLikes, 
+  handlePostLikes, 
+  addToPosts, 
+  getLikesNumber, 
+  updateReplies, 
+  fetchReplies, 
+  postToReplies, 
+  addLikeToReply, 
+  pushUsernameToReplyLikes, 
+  removeUsernameFromReplies }
