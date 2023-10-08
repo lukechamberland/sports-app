@@ -17,7 +17,7 @@ export default function Bars() {
           <div class="each-bar-div" onClick={() => changeNavigation("/takes")}>
             your takes
           </div>
-          <div class="each-bar-div">
+          <div class="each-bar-div" onClick={() => changeNavigation("/myreplies")}>
             your replies
           </div>
         </div>

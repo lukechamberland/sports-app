@@ -226,6 +226,17 @@ const removeUsernameFromReplies = function(username, id) {
   })
 }
 
+const deleteFromPosts = function(id) {
+  return new Promise((resolve, reject) => {
+    const statement = "DELETE FROM posts WHERE id = $1;"
+    const values = [id];
+
+    pool.query(statement, values)
+    .then(result => resolve(result))
+    .catch(error => console.error(error))
+  })
+}
+
 module.exports = { 
   addToUsers, 
   selectFromUsers, 
@@ -246,4 +257,6 @@ module.exports = {
   postToReplies, 
   addLikeToReply, 
   pushUsernameToReplyLikes, 
-  removeUsernameFromReplies }
+  removeUsernameFromReplies,
+  deleteFromPosts
+}

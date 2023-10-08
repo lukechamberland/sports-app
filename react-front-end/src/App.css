@@ -991,7 +991,7 @@ body {
   height: 500px;
   position: fixed;
   right: 0%;
-  top: 9%;
+  top: 7.4%;
   background-color: white;
   z-index: 1000;
 }
@@ -1018,3 +1018,50 @@ body {
 .your-take:hover {
   background-color: rgb(42, 42, 42);
 }
+
+.garbage:hover {
+  color: rgb(230, 183, 62);
+}
+
+.confirm-delete {
+  width: 95%;
+  height: 50px;
+  border: none;
+  background-color: rgb(230, 183, 62);
+  cursor: pointer;
+}
+
+.confirm-delete:hover {
+  background-color: rgb(248, 211, 120);;
+}
+
+.my-replies-div {
+  width: 100%;
+  height: 100vh;
+  margin-top: 65px;
+  display: flex;
+  justify-content: center;
+}
+
+.my-replies-verticle-div {
+  height: 100%;
+  width: 75%;
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-replies-horizontal-div {
+  border: 1px solid white;
+  height: 200px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.my-replies-horizontal-div:hover {
+  background-color: rgb(45, 45, 45);
+}
+

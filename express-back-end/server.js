@@ -22,7 +22,8 @@ const { addToUsers,
   postToReplies,
   addLikeToReply,
   pushUsernameToReplyLikes,
-  removeUsernameFromReplies } = require('./helpers');
+  removeUsernameFromReplies,
+  deleteFromPosts } = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -143,6 +144,7 @@ app.post("/api/posts", (req, res) => {
   const totals = 0;
   const likes = 0;
   const voters = [];
+  const objectId = req.body.id;
 
   const returnId = function(arr) {
     let highest = 0;
@@ -155,12 +157,16 @@ app.post("/api/posts", (req, res) => {
     return newHighest;
   }
 
-  selectFromPosts().then(array => {
-    const id = returnId(array);
-    addToPosts(id, title, username, take, votes, totals, voters, likes)
-  })
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
+  if (objectId) {
+    deleteFromPosts(objectId)
+  } else {
+    selectFromPosts().then(array => {
+      const id = returnId(array);
+      addToPosts(id, title, username, take, votes, totals, voters, likes)
+    })
+      .then(result => console.log(result))
+      .catch(error => console.log(error))
+  }
 })
 
 app.get("/api/replies", (req, res) => {

@@ -8,7 +8,9 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHeart, faCheckToSlot, faCheck, faUser, faBars, faHouse, faPlus, faComment, faArrowRight);
+library.add(faHeart, faCheckToSlot, faCheck, faUser, faBars, faHouse, faPlus, faComment, faArrowRight, faTrash, faX);
 
-export { faHeart, faCheckToSlot, faCheck, faUser, faBars, faHouse, faPlus, faComment, faArrowRight }
+export { faHeart, faCheckToSlot, faCheck, faUser, faBars, faHouse, faPlus, faComment, faArrowRight, faTrash, faX }

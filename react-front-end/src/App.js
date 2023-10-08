@@ -13,6 +13,7 @@ import AddPost from './components/AddPost';
 import Reply from './components/Reply';
 import Bars from './components/Bars';
 import YourTakes from './components/YourTakes';
+import YourReplies from './components/YourReplies';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/home/:id/replies/:reply" element={<Reply header={<Header />} />} />
         <Route path="/bars" element={<Bars />} />
         <Route path="/takes" element={<YourTakes />} />
+        <Route path="myreplies" element={<YourReplies />} />
       </Routes>
     </BrowserRouter>
   )

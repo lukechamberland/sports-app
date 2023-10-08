@@ -43,7 +43,7 @@ export default function AddPost() {
   const post = function () {
     const username = localStorage.getItem("username");
     if (!checkTake(title) || !checkTake(take)) {
-      alert("Invalid input.  Please ensure that your title/take have no words with more than 35 charachters");
+      alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
       return;
     } else {
       changeNavigation('/home')
