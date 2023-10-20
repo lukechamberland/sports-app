@@ -32,13 +32,13 @@ export default function Header() {
     <div>
       <div class="header">
         <div class="left-side-header">
-          <div class="house" onClick={() => changeNavigate('/home')}>
+          <div class="house" onClick={() => changeNavigate("/home")}>
             <FontAwesomeIcon icon={faHouse} />
           </div>
-          <div class="user">
+          <div class="user" onClick={() => changeNavigate("/profile")}>
             <FontAwesomeIcon icon={faUser} />
           </div>
-          <div class="hello-first-name">
+          <div class="hello-first-name" style={{ width: "300px"}}>
             Hello, {returnName()}
           </div>
         </div>

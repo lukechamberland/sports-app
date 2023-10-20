@@ -44,16 +44,16 @@ export default function AddPost() {
     const username = localStorage.getItem("username");
     if (!checkTake(title) || !checkTake(take)) {
       alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
-      return;
     } else {
-      changeNavigation('/home')
+      changeNavigation('/home');
       Axios.post("/api/posts", {
         username: username,
         title: title,
         take: take
       })
         .then(response => {
-          console.log(response)
+          console.log(response);
+          window.location.reload();
         })
 
         .catch(error => console.error(error))
@@ -81,7 +81,7 @@ export default function AddPost() {
                 onChange={(e) => changeState(e, setTake)}
               ></textarea>
 
-              <button type="submit" class="submit-post" onClick={() => post()}>post</button>
+              <button type="submit" class="submit-post" method="POST" action="/api/posts" onClick={() => post()}>post</button>
             </form>
           </div>
         </div>

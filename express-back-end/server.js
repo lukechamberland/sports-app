@@ -23,7 +23,9 @@ const { addToUsers,
   addLikeToReply,
   pushUsernameToReplyLikes,
   removeUsernameFromReplies,
-  deleteFromPosts } = require('./helpers');
+  deleteFromPosts,
+  removeReply,
+  updateUser } = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -47,17 +49,28 @@ app.get('/api/posts', (req, res) => {
 })
 
 app.post("/api/users", (req, res) => {
-  selectFromUsers().then(array => {
-    const id = array.length + 1;
-    addToUsers(id, req.body.email, req.body.password, req.body.firstname, req.body.lastname, req.body.username);
-  })
-    .then(result => {
-      res.json(result)
+  const change = req.body.change;
+  const username = req.body.username;
+  const originalState = req.body.originalState;
+  const newState = req.body.newState;
+
+  if (change) {
+    updateUser(originalState, newState, username)
+      .then(result => console.log(result))
+      .catch(error => console.error(error));
+  } else {
+    selectFromUsers().then(array => {
+      const id = array.length + 1;
+      addToUsers(id, req.body.email, req.body.password, req.body.firstname, req.body.lastname, req.body.username);
     })
-    .catch(err => {
-      console.log(err)
-      res.status(500).json({ error: "An error occurred while processing your request." });
-    })
+      .then(result => {
+        res.json(result)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json({ error: "An error occurred while processing your request." });
+      })
+  }
 })
 
 app.get("/api/posts/:id", (req, res) => {
@@ -146,7 +159,7 @@ app.post("/api/posts", (req, res) => {
   const voters = [];
   const objectId = req.body.id;
 
-  const returnId = function(arr) {
+  const returnId = function (arr) {
     let highest = 0;
     for (let obj of arr) {
       if (highest < obj.id) {
@@ -181,33 +194,41 @@ app.post("/api/replies", (req, res) => {
   const objectId = req.body.objectId;
   const isReplyLike = req.body.isReplyLike;
   const replying = req.body.replying;
+  const deleting = req.body.deleting;
+  const newId = req.body.id;
+  const originalId = req.body.originalId;
 
-  if (isReplyLike) {
-    if (like) {
-      addLikeToReply(objectId, like)
-        .then(results => console.log(results))
-        .catch(error => console.error(error))
 
-      pushUsernameToReplyLikes(username, objectId)
-        .then(result => console.log(result))
-        .catch(error => console.error(error))
-    } else {
-      addLikeToReply(objectId, like)
-      .then(response => console.log(response))
-      .catch(error => console.error(error))
-
-      removeUsernameFromReplies(username, objectId)
-    }
+  if (deleting) {
+    removeReply(originalId)
   } else {
-    fetchReplies().then(result => {
-      const id = result.length + 1;
-      if (replying) {
-        postToReplies(id, postId, reply, username, true);
+    if (isReplyLike) {
+      if (like) {
+        addLikeToReply(objectId, like)
+          .then(results => console.log(results))
+          .catch(error => console.error(error))
+
+        pushUsernameToReplyLikes(username, objectId)
+          .then(result => console.log(result))
+          .catch(error => console.error(error))
       } else {
-        postToReplies(id, postId, reply, username, false);
+        addLikeToReply(objectId, like)
+          .then(response => console.log(response))
+          .catch(error => console.error(error))
+
+        removeUsernameFromReplies(username, objectId)
       }
-    })
-      .catch(error => { console.error(error) })
+    } else {
+      fetchReplies().then(result => {
+        const id = result.length + 1;
+        if (replying) {
+          postToReplies(id, postId, reply, username, true, originalId);
+        } else {
+          postToReplies(id, postId, reply, username, false, originalId);
+        }
+      })
+        .catch(error => { console.error(error) })
+    }
   }
 })
 

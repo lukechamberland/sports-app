@@ -1038,7 +1038,7 @@ body {
 .my-replies-div {
   width: 100%;
   height: 100vh;
-  margin-top: 65px;
+  margin-top: 105px;
   display: flex;
   justify-content: center;
 }
@@ -1065,3 +1065,53 @@ body {
   background-color: rgb(45, 45, 45);
 }
 
+.profile-edit-button {
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgb(25, 25, 25);
+  color: white;
+  padding: 7.5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-edit-button:hover {
+  color: rgb(230, 183, 62);
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.profile-change-input {
+  margin-top: 20px;
+  width: 250px;
+  height: 35px;
+  font-size: 20px;
+  color: white;
+  background-color: rgb(25, 25, 25);
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.profile-change-input:hover {
+  border: 1px solid rgb(230, 183, 62);
+}
+
+.profile-change-input:focus {
+  outline: none;
+}
+
+.profile-edit-submit-button {
+  margin-top: 25px;
+  width: 270px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: rgb(25, 25, 25);
+  border: 1px solid rgb(104, 104, 104);
+  color: grey;
+}
+
+.profile-edit-submit-button:hover {
+  color: rgb(230, 183, 62);
+  border: 1px solid rgb(230, 183, 62);
+}

@@ -32,7 +32,7 @@ export default function Home(props) {
 
   const mappedData = function () {
     return postState.map((ele, index) => (
-      <div class="take-div" onClick={() => changeNav(index + 1)}>{ele.title}</div>
+      <div class="take-div" onClick={() => changeNav(ele.id)}>{ele.title}</div>
     ))
   }
 

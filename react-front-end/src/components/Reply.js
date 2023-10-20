@@ -43,6 +43,8 @@ export default function Reply(props) {
     }, 500);
   }, []);
 
+  console.log(fullData);
+
   const readLikedColorState = function () {
     if (likedColorState % 2 === 0) {
       return "grey";
@@ -99,7 +101,8 @@ export default function Reply(props) {
       isReplyLike: false,
       username,
       reply: response,
-      replying: false
+      replying: false,
+      originalId: JSON.parse(localStorage.getItem("id"))
     })
   }
 
@@ -116,8 +119,6 @@ export default function Reply(props) {
       [id]: !prev[id]
     }));
   }
-
-  console.log(clickedReplyState)
 
   const sendNestedReply = function(postid) {
     const username = localStorage.getItem("username");

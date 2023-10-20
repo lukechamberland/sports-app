@@ -14,6 +14,7 @@ import Reply from './components/Reply';
 import Bars from './components/Bars';
 import YourTakes from './components/YourTakes';
 import YourReplies from './components/YourReplies';
+import Profile from './components/Profile';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/bars" element={<Bars />} />
         <Route path="/takes" element={<YourTakes />} />
         <Route path="myreplies" element={<YourReplies />} />
+        <Route path="profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   )

@@ -5,7 +5,6 @@ import Header from "./Header"
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "../icons";
-import { faX } from "../icons";
 
 export default function YourTakes() {
 
@@ -17,10 +16,10 @@ export default function YourTakes() {
 
   const [circleState, setCircleState] = useState(true);
   const [takesArray, setTakesArray] = useState([]);
-  const [repliesForPost, setRepliesForPost] = useState([]);
   const [showConfirmDiv, setShowConfirmDiv] = useState({
     display: "none",
-    id: null
+    id: null,
+    originalId: null
   })
 
   useEffect(() => {
@@ -82,7 +81,7 @@ export default function YourTakes() {
       })
 
     setTimeout(() => {
-      setCircleState(false)
+      setCircleState(false);
     }, 1500)
   }, []);
 
@@ -101,11 +100,24 @@ export default function YourTakes() {
     }
   }
 
-  const deletePost = function (objectId) {
+  const deletePost = function (objectId, originalid) {
     window.location.reload();
     Axios.post("/api/posts", {
       id: objectId
     })
+    Axios.post("/api/replies", {
+      deleting: true,
+      id: objectId,
+      originalId: originalid
+    })
+  }
+
+  const checkTakesArray = function (array) {
+    if (array[0].length === 0 && array[1].length === 0 && array[2].length === 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   const showConfirmState = function () {
@@ -121,12 +133,13 @@ export default function YourTakes() {
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "10px", color: "grey" }}>This action cannot be undone</div>
               </div>
               <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                <button onClick={() => deletePost(showConfirmDiv.id)} class="confirm-delete">Delete</button>
+                <button onClick={() => deletePost(showConfirmDiv.id, showConfirmDiv.originalId)} class="confirm-delete">Delete</button>
               </div>
               <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
                 <button class="confirm-delete" onClick={() => setShowConfirmDiv({
                   display: "none",
-                  id: null
+                  id: null,
+                  originalId: null
                 })}>Don't delete</button>
               </div>
             </div>
@@ -139,87 +152,104 @@ export default function YourTakes() {
   const returnCorrectState = function () {
     if (circleState) {
       return (
-        <Circle />
+        <div>
+          <Header />
+          <Circle />
+        </div>
       )
     } else {
-      return (
-        <div>
-          <div><Header /></div>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "100px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", width: "85%" }}>
-              <div>
-                {takesArray[0].map((obj) => (
-                  <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
-                    <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div>
-                        <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
-                        <div style={{ color: "white" }}>{obj.likes} likes</div>
-                      </div>
-                      <div>
-                        <div onClick={(e) => {
-                          e.stopPropagation();
-                          setShowConfirmDiv({
-                            display: "block",
-                            opacity: "50%",
-                            id: obj.id
-                          })
-                        }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {takesArray[1].map((obj) => (
-                  <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
-                    <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div>
-                        <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
-                        <div style={{ color: "white" }}>{obj.likes} likes</div>
-                      </div>
-                      <div>
-                        <div onClick={(e) => {
-                          e.stopPropagation();
-                          setShowConfirmDiv({
-                            display: "block",
-                            opacity: "50%",
-                            id: obj.id
-                          })
-                        }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
+      if (!checkTakesArray(takesArray)) {
+        return (
+          <div>
+            <div><Header /></div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div style={{ color: "white", fontSize: "40px", marginTop: "350px", fontWeight: "600" }}>No takes yet :(</div>
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <div><Header /></div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "100px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", width: "85%" }}>
+                <div>
+                  {takesArray[0].map((obj) => (
+                    <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
+                      <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div>
+                          <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
+                          <div style={{ color: "white" }}>{obj.likes} likes</div>
+                        </div>
+                        <div>
+                          <div onClick={(e) => {
+                            e.stopPropagation();
+                            setShowConfirmDiv({
+                              display: "block",
+                              opacity: "50%",
+                              id: obj.id,
+                              originalId: obj.id
+                            })
+                          }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {takesArray[2].map((obj) => (
-                  <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
-                    <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div>
-                        <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
-                        <div style={{ color: "white" }}>{obj.likes} likes</div>
-                      </div>
-                      <div>
-                        <div onClick={(e) => {
-                          e.stopPropagation();
-                          setShowConfirmDiv({
-                            display: "block",
-                            opacity: "50%",
-                            id: obj.id
-                          })
-                        }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
+                  ))}
+                </div>
+                <div>
+                  {takesArray[1].map((obj) => (
+                    <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
+                      <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div>
+                          <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
+                          <div style={{ color: "white" }}>{obj.likes} likes</div>
+                        </div>
+                        <div>
+                          <div onClick={(e) => {
+                            e.stopPropagation();
+                            setShowConfirmDiv({
+                              display: "block",
+                              opacity: "50%",
+                              id: obj.id,
+                              originalId: obj.id
+                            })
+                          }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div>
+                  {takesArray[2].map((obj) => (
+                    <div class="your-take" onClick={() => changeNavigation(`/home/${obj.id}`)}>
+                      <h1 style={{ fontWeight: "400", color: "rgb(230, 183, 62)" }}>{limitCharacters(obj.title)}</h1>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div>
+                          <div style={{ color: "white", marginBottom: "10px" }}>{obj.replyCount} reply(s)</div>
+                          <div style={{ color: "white" }}>{obj.likes} likes</div>
+                        </div>
+                        <div>
+                          <div onClick={(e) => {
+                            e.stopPropagation();
+                            setShowConfirmDiv({
+                              display: "block",
+                              opacity: "50%",
+                              id: obj.id,
+                              originalId: obj.id
+                            })
+                          }} class="garbage" style={{ marginTop: "20px", fontSize: "20px" }}><FontAwesomeIcon icon={faTrash} /></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )
+        )
+      }
     }
   }
   return (

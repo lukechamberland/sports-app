@@ -289,7 +289,8 @@ export default function Post(props) {
         postId,
         username,
         reply: responseState,
-        replying: true
+        replying: true,
+        originalId: JSON.parse(localStorage.getItem("id"))
       })
         .then(() => changeNavigation(`/home/${id}`))
     }
@@ -368,9 +369,6 @@ export default function Post(props) {
     newReplyLikesArray[index] -= 1;
     setReplyLikes(newReplyLikesArray);
   }
-
-  console.log("this is the reply state: ", repliesState)
-  console.log("This is the rreply likes: ", replyLikes)
 
   const returnRepliesState = function () {
     const data = repliesState.map((obj, index) => (

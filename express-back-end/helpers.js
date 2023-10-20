@@ -172,10 +172,10 @@ const fetchReplies = function() {
   })
 }
 
-const postToReplies = function(id, postId, reply, username, bool) {
+const postToReplies = function(id, postId, reply, username, bool, original) {
   return new Promise((resolve, reject) => {
-    const statement = "INSERT INTO replies (id, postId, reply, username, likes, likers, post) VALUES ($1, $2, $3, $4, 0, ARRAY[]::TEXT[], $5);"
-    const values = [id, postId, reply, username, bool];
+    const statement = "INSERT INTO replies (id, postId, reply, username, likes, likers, post, originalpostid) VALUES ($1, $2, $3, $4, 0, ARRAY[]::TEXT[], $5, $6);"
+    const values = [id, postId, reply, username, bool, original];
 
     pool.query(statement, values)
     .then(response => resolve(response))
@@ -237,6 +237,27 @@ const deleteFromPosts = function(id) {
   })
 }
 
+const removeReply = function(id) {
+  return new Promise((resolve, reject) => {
+    const statement = "DELETE FROM replies WHERE originalpostid = $1;"
+    const values = [id];
+
+    pool.query(statement, values)
+    .then(result => resolve(result))
+    .catch(error => console.error(error))
+  })
+}
+
+const updateUser = function(originalValue, newValue, username) {
+  return new Promise((resolve, reject) => {
+    const statement = `UPDATE users SET ${originalValue} = $1 WHERE username = $2;`
+    const values = [newValue, username];
+
+    pool.query(statement, values).then(results => resolve(results))
+    .catch(error => console.error(error))
+  })
+}
+
 module.exports = { 
   addToUsers, 
   selectFromUsers, 
@@ -258,5 +279,7 @@ module.exports = {
   addLikeToReply, 
   pushUsernameToReplyLikes, 
   removeUsernameFromReplies,
-  deleteFromPosts
+  deleteFromPosts,
+  removeReply,
+  updateUser
 }
