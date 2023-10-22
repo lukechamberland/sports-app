@@ -40,7 +40,7 @@ If you prefer the traditional route and wan't to run this application only on yo
 
 ## Contact
 
-Email: `luke.chamberland@shaw.ca`
-Discord: `Luke23#6561`
+- Email: `luke.chamberland@shaw.ca`
+- Discord: `Luke23#6561`
 
 If you have any questions/concerns or feedback for my app please contact me!
