@@ -9,8 +9,6 @@ import { faComment } from "../icons";
 
 export default function Post(props) {
 
-  const { circle, header } = props;
-
   const [postLikes, setPostLikes] = useState(0);
   const [likesArray, setLikesArray] = useState([]);
   const [postId, setPostId] = useState(0);
@@ -29,11 +27,10 @@ export default function Post(props) {
   const [openReply, setOpenReply] = useState(0);
   const [responseState, setResponseState] = useState('');
   const [placeHolderState, setPlaceHolderState] = useState('Reply...');
-  const [usernameState, setUsernameState] = useState('');
   const [replyLikes, setReplyLikes] = useState([]);
 
+  const { circle, header } = props;
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const changeNavigation = function (route) {
@@ -45,7 +42,6 @@ export default function Post(props) {
       setPostId(id);
       for (let ele of data.data) {
         if (ele.id == id) {
-          setUsernameState(ele.username)
           setPostPageState(ele);
           setVoteState(ele.votes);
           setInitialInputValue(ele.totals);
@@ -86,7 +82,6 @@ export default function Post(props) {
       if (arr.includes(parseInt(id, 10))) {
         setColorState(1);
       }
-      console.log(arr)
     })
   }, []);
 
@@ -342,7 +337,7 @@ export default function Post(props) {
     const correctIndex = repliesState.indexOf(correctObj);
     const newArray = [
       ...repliesState,
-    ]
+    ];
     newArray[correctIndex].likes = newArray[correctIndex].likes + 1;
     setRepliesState(newArray);
   }

@@ -13,6 +13,7 @@ This application was built entirely through React and Express, with a basic SQL 
 
 - React.js
 - Express.js
+- SQL
 - FontAwesome library
 
 ## Limitations
