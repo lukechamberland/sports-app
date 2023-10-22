@@ -73,7 +73,7 @@ export default function AddPost() {
           <div><Header /></div>
           <div class="disclaimer-div" style={{ display: display.display }}>
             <div class="disclaimer">
-              Please keep your post respectful and on topic. Keep your title short and descriptive and make sure that no words surpass 35 characters.  Bullying, discrimination or harrasment of any kind is strictly not allowed.  Please refer to rules for further info.
+              Please keep your post respectful and on topic. Keep your title short and descriptive and make sure that no words surpass 35 characters.  Bullying, discrimination or harrasment of any kind is strictly not allowed.  Please refer to rules on the home page for further info.
               <div class="confirm" onClick={() => setDisplay({
                 display: "none",
                 marginTop: "150px"
