@@ -28,35 +28,37 @@ export default function YourReplies() {
         const [replies, post] = result;
         const username = localStorage.getItem("username");
         const newArray = replies.data.filter((obj) => obj.username === username);
+        const secondNewArray = newArray.reverse();
 
-        for (let i = 0; i < newArray.length; i++) {
-          const originalPost = post.data.find((obj) => newArray[i].originalpostid === obj.id);
-          let originalUser = null;
-          if (newArray[i].post) {
-            const correctPostObj = post.data.find((obj) => obj.id === newArray[i].postid)
-            originalUser = correctPostObj.username;
+        console.log(post.data)
+        console.log(secondNewArray)
+
+        for (let i = 0; i < secondNewArray.length; i++) {
+          if (secondNewArray[i].post) {
+            const correctPostObj = post.data.find((obj) => obj.id === secondNewArray[i].postid);
+            const originalUser = correctPostObj.username;
+            const originalTitle = correctPostObj.title
             const newObj = {
-              ...newArray[i],
-              originaluser: originalUser
+              ...secondNewArray[i],
+              originaluser: originalUser,
+              originaltitle: originalTitle
             }
-            newArray[i] = newObj;
+            secondNewArray[i] = newObj;
           } else {
-            const correctPostObj = replies.data.find((obj) => obj.id === newArray[i].postid)
-            originalUser = correctPostObj.username;
+            const correctPostObj = replies.data.find((obj) => obj.id === secondNewArray[i].postid);
+            const originalUser = correctPostObj.username;
+            const correctPostId = post.data.find((obj) => obj.id === correctPostObj.originalpostid);
+            const originalTitle = correctPostId.title;
             const newObj = {
-              ...newArray[i],
-              originaluser: originalUser
+              ...secondNewArray[i],
+              originaluser: originalUser,
+              originaltitle: originalTitle
             }
-            newArray[i] = newObj;
+            secondNewArray[i] = newObj;
           }
-          const newObj = {
-            ...newArray[i],
-            originaltitle: originalPost.title
-          }
-          newArray[i] = newObj;
         }
 
-        setFullReplies(newArray);
+        setFullReplies(secondNewArray);
 
         setTimeout(() => {
           setShowCircleState(false)

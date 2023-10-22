@@ -15,6 +15,7 @@ import Bars from './components/Bars';
 import YourTakes from './components/YourTakes';
 import YourReplies from './components/YourReplies';
 import Profile from './components/Profile';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
         <Route path="/" element={<FirstPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home header={<Header />} />} />
+        <Route path="/home" element={<Home header={<Header />} footer={<Footer />} />} />
         <Route path="/home/:id" element={<Post circle={<Circle />} header={<Header />} />} />
         <Route path="/circle" element={<Circle />} />
         <Route path="/likes" element={<Likes />} />
@@ -34,6 +35,7 @@ function App() {
         <Route path="/takes" element={<YourTakes />} />
         <Route path="myreplies" element={<YourReplies />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="bottom" element={<Footer />} />
       </Routes>
     </BrowserRouter>
   )

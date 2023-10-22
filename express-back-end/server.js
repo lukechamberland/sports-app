@@ -25,7 +25,9 @@ const { addToUsers,
   removeUsernameFromReplies,
   deleteFromPosts,
   removeReply,
-  updateUser } = require('./helpers');
+  updateUser,
+  updateReply,
+  updatePost } = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -158,6 +160,9 @@ app.post("/api/posts", (req, res) => {
   const likes = 0;
   const voters = [];
   const objectId = req.body.id;
+  const change = req.body.change;
+  const newUsername = req.body.newUsername;
+  const userId = req.body.userId;
 
   const returnId = function (arr) {
     let highest = 0;
@@ -170,15 +175,19 @@ app.post("/api/posts", (req, res) => {
     return newHighest;
   }
 
-  if (objectId) {
-    deleteFromPosts(objectId)
+  if (change) {
+    updatePost(newUsername, userId);
   } else {
-    selectFromPosts().then(array => {
-      const id = returnId(array);
-      addToPosts(id, title, username, take, votes, totals, voters, likes)
-    })
-      .then(result => console.log(result))
-      .catch(error => console.log(error))
+    if (objectId) {
+      deleteFromPosts(objectId)
+    } else {
+      selectFromPosts().then(array => {
+        const id = returnId(array);
+        addToPosts(id, title, username, take, votes, totals, voters, likes, userId)
+      })
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
+    }
   }
 })
 
@@ -197,37 +206,43 @@ app.post("/api/replies", (req, res) => {
   const deleting = req.body.deleting;
   const newId = req.body.id;
   const originalId = req.body.originalId;
+  const change = req.body.change;
+  const newUsername = req.body.newUsername;
+  const userId = req.body.userId;
 
-
-  if (deleting) {
-    removeReply(originalId)
+  if (change) {
+    updateReply(newUsername, userId);
   } else {
-    if (isReplyLike) {
-      if (like) {
-        addLikeToReply(objectId, like)
-          .then(results => console.log(results))
-          .catch(error => console.error(error))
-
-        pushUsernameToReplyLikes(username, objectId)
-          .then(result => console.log(result))
-          .catch(error => console.error(error))
-      } else {
-        addLikeToReply(objectId, like)
-          .then(response => console.log(response))
-          .catch(error => console.error(error))
-
-        removeUsernameFromReplies(username, objectId)
-      }
+    if (deleting) {
+      removeReply(originalId)
     } else {
-      fetchReplies().then(result => {
-        const id = result.length + 1;
-        if (replying) {
-          postToReplies(id, postId, reply, username, true, originalId);
+      if (isReplyLike) {
+        if (like) {
+          addLikeToReply(objectId, like)
+            .then(results => console.log(results))
+            .catch(error => console.error(error))
+  
+          pushUsernameToReplyLikes(username, objectId)
+            .then(result => console.log(result))
+            .catch(error => console.error(error))
         } else {
-          postToReplies(id, postId, reply, username, false, originalId);
+          addLikeToReply(objectId, like)
+            .then(response => console.log(response))
+            .catch(error => console.error(error))
+  
+          removeUsernameFromReplies(username, objectId)
         }
-      })
-        .catch(error => { console.error(error) })
+      } else {
+        fetchReplies().then(result => {
+          const id = result.length + 1;
+          if (replying) {
+            postToReplies(id, postId, reply, username, true, originalId, userId);
+          } else {
+            postToReplies(id, postId, reply, username, false, originalId, userId);
+          }
+        })
+          .catch(error => { console.error(error) })
+      }
     }
   }
 })

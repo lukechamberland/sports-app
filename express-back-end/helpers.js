@@ -2,7 +2,7 @@ const { pool } = require('../db/connection.js');
 
 const addToUsers = function (id, email, password, firstname, lastname, username) {
   return new Promise((resolve, reject) => {
-    const statement = 'INSERT INTO users (id, email, password, firstname, lastname, username) VALUES ($1, $2, $3, $4, $5, $6);'
+    const statement = 'INSERT INTO users (id, email, password, firstname, lastname, username, likes) VALUES ($1, $2, $3, $4, $5, $6, ARRAY[]::INTEGER[]);'
     const values = [id, email, password, firstname, lastname, username];
     pool.query(statement, values)
       .then(result => resolve(result.rows))
@@ -130,10 +130,10 @@ const handlePostLikes = function(likes, id) {
   })
 }
 
-const addToPosts = function(id, title, username, take, votes, totals, voters, likes) {
+const addToPosts = function(id, title, username, take, votes, totals, voters, likes, userId) {
   return new Promise((resolve, reject) => {
-    const statement = 'INSERT INTO posts (id, title, username, take, votes, totals, voters, likes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);'
-    const values = [id, title, username, take, votes, totals, voters, likes];
+    const statement = 'INSERT INTO posts (id, title, username, take, votes, totals, voters, likes, userId) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);'
+    const values = [id, title, username, take, votes, totals, voters, likes, userId];
 
     pool.query(statement, values)
     .then(result => resolve(result))
@@ -172,10 +172,10 @@ const fetchReplies = function() {
   })
 }
 
-const postToReplies = function(id, postId, reply, username, bool, original) {
+const postToReplies = function(id, postId, reply, username, bool, original, userId) {
   return new Promise((resolve, reject) => {
-    const statement = "INSERT INTO replies (id, postId, reply, username, likes, likers, post, originalpostid) VALUES ($1, $2, $3, $4, 0, ARRAY[]::TEXT[], $5, $6);"
-    const values = [id, postId, reply, username, bool, original];
+    const statement = "INSERT INTO replies (id, postId, reply, username, likes, likers, post, originalpostid, userid) VALUES ($1, $2, $3, $4, 0, ARRAY[]::TEXT[], $5, $6, $7);"
+    const values = [id, postId, reply, username, bool, original, userId];
 
     pool.query(statement, values)
     .then(response => resolve(response))
@@ -258,6 +258,26 @@ const updateUser = function(originalValue, newValue, username) {
   })
 }
 
+const updatePost = function(newValue, userId) {
+  return new Promise((resolve, reject) => {
+    const statement = "UPDATE posts SET username = $1 WHERE userid = $2;"
+    const values = [newValue, userId];
+
+    pool.query(statement, values).then(results => resolve(results))
+    .catch(error => console.error(error))
+  })
+}
+
+const updateReply = function(newValue, userId) {
+  return new Promise((resolve, reject) => {
+    const statement = "UPDATE replies SET username = $1 WHERE userid = $2;"
+    const values = [newValue, userId];
+
+    pool.query(statement, values).then(results => resolve(results))
+    .catch(error => console.error(error))
+  })
+}
+
 module.exports = { 
   addToUsers, 
   selectFromUsers, 
@@ -281,5 +301,7 @@ module.exports = {
   removeUsernameFromReplies,
   deleteFromPosts,
   removeReply,
-  updateUser
+  updateUser,
+  updatePost, 
+  updateReply
 }

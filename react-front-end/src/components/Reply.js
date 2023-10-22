@@ -15,7 +15,6 @@ export default function Reply(props) {
   const [circleState, setCircleState] = useState(true);
   const [replyState, setReplyState] = useState([]);
   const [likedColorState, setLikedColorState] = useState(0);
-  const [originalReplies, setOriginalReplies] = useState([]);
   const [clickedReplyState, setClickedReplyState] = useState({});
   const [nestedReplyState, setNestedReplyState] = useState({});
   const [response, setResponse] = useState('');
@@ -27,8 +26,6 @@ export default function Reply(props) {
     Axios.get('/api/replies').then(data => {
       setFullData(data.data)
       const username = localStorage.getItem("username");
-      const originalRepliesArray = data.data.filter((obj) => (obj.postid == reply && !obj.post));
-      setOriginalReplies(originalRepliesArray);
       for (let obj of data.data) {
         if (obj.id == reply) {
           setReplyState(obj);
@@ -42,8 +39,6 @@ export default function Reply(props) {
       setCircleState(false);
     }, 500);
   }, []);
-
-  console.log(fullData);
 
   const readLikedColorState = function () {
     if (likedColorState % 2 === 0) {
@@ -95,14 +90,17 @@ export default function Reply(props) {
 
   const sendRequest = function () {
     const username = localStorage.getItem("username");
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
     Axios.post('/api/replies', {
       postId: reply,
       isReplyLike: false,
       username,
       reply: response,
       replying: false,
-      originalId: JSON.parse(localStorage.getItem("id"))
+      originalId: JSON.parse(localStorage.getItem("id")),
+      userId: JSON.parse(localStorage.getItem("userId"))
     })
   }
 
@@ -122,7 +120,9 @@ export default function Reply(props) {
 
   const sendNestedReply = function(postid) {
     const username = localStorage.getItem("username");
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
     Axios.post("/api/replies", {
       postId: postid,
       username, 
@@ -131,7 +131,7 @@ export default function Reply(props) {
   }
 
   function returnCorrectReplyText(id) {
-    const newArray = fullData.filter((obj) => obj.postid === id);
+    const newArray = fullData.filter((obj) => obj.postid === id && obj.post === false);
     if (newArray.length > 0) {
       return "view replies";
     } else {
@@ -140,7 +140,8 @@ export default function Reply(props) {
   }
 
   function returnCorrectButtonClass(id) {
-    const newArray = fullData.filter((obj) => obj.postid === id);
+    const newArray = fullData.filter((obj) => obj.postid === id && obj.post === false);
+    console.log(newArray)
     if (newArray.length > 0) {
       return "view-conversation-reply-button";
     } else {
@@ -150,7 +151,7 @@ export default function Reply(props) {
 
   function findReplies(idOfPost) {
 
-    const filteredArray = fullData.filter((obj) => (obj.postid == idOfPost));
+    const filteredArray = fullData.filter((obj) => obj.postid == idOfPost && obj.post === false);
     const data = (
       <div class="full-replies">
         {filteredArray.map((obj) => (

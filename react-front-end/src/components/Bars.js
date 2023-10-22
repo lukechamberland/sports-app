@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Circle from "./Circle";
 
 export default function Bars() {
 
@@ -8,6 +7,10 @@ export default function Bars() {
 
   const changeNavigation = function(route) {
     navigate(route);
+  }
+
+  const redirectToHome = function() {
+    changeNavigation("/");
   }
 
   return (
@@ -19,6 +22,9 @@ export default function Bars() {
           </div>
           <div class="each-bar-div" onClick={() => changeNavigation("/myreplies")}>
             your replies
+          </div>
+          <div class="each-bar-div" onClick={() => redirectToHome()}>
+            logout
           </div>
         </div>
       </div>

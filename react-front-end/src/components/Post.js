@@ -280,17 +280,16 @@ export default function Post(props) {
       setPlaceHolderState("Reply field cannot be left empty...");
       return;
     } else {
-      setLoadingState(true);
       setTimeout(() => {
-        setLoadingState(false);
-      }, 800);
-      window.location.reload();
+        window.location.reload();
+      }, 100);
       Axios.post(`/api/replies`, {
         postId,
         username,
         reply: responseState,
         replying: true,
-        originalId: JSON.parse(localStorage.getItem("id"))
+        originalId: JSON.parse(localStorage.getItem("id")),
+        userId: JSON.parse(localStorage.getItem("userId"))
       })
         .then(() => changeNavigation(`/home/${id}`))
     }

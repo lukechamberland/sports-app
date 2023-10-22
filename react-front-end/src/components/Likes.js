@@ -10,11 +10,7 @@ export default function Likes() {
 
   const navigate = useNavigate();
 
-  const [userObj, setUserObj] = useState([]);
-
   const [likesArray, setLikesArray] = useState([]);
-
-  const [likedPosts, setLikedPosts] = useState([]);
 
   const [evenLikedPosts, setEvenLikedPosts] = useState([]);
 
@@ -32,7 +28,6 @@ export default function Likes() {
         const correctObj = users.data.find((obj) => obj.username === username);
         setLikesArray(correctObj.likes);
         const correctLikesArray = posts.data.filter((obj) => correctObj.likes.includes(obj.id));
-        setLikedPosts(correctLikesArray);
         correctLikesArray.reverse();
         const oddArray = [];
         const evenArray = [];

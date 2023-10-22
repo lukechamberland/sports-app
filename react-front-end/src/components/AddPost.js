@@ -12,8 +12,11 @@ export default function AddPost() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
-
   const [take, setTake] = useState('');
+  const [display, setDisplay] = useState({
+    display: "flex",
+    marginTop: "25px"
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -45,11 +48,14 @@ export default function AddPost() {
     if (!checkTake(title) || !checkTake(take)) {
       alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
     } else {
-      changeNavigation('/home');
+      setTimeout(() => {
+        changeNavigation('/home');
+      }, 50);
       Axios.post("/api/posts", {
         username: username,
         title: title,
-        take: take
+        take: take,
+        userId: JSON.parse(localStorage.getItem("userId"))
       })
         .then(response => {
           console.log(response);
@@ -65,7 +71,16 @@ export default function AddPost() {
       return (
         <div>
           <div><Header /></div>
-          <div class="add-post">
+          <div class="disclaimer-div" style={{ display: display.display }}>
+            <div class="disclaimer">
+              Please keep your post respectful and on topic. Keep your title short and descriptive and make sure that no words surpass 35 characters.  Bullying, discrimination or harrasment of any kind is strictly not allowed.  Please refer to rules for further info.
+              <div class="confirm" onClick={() => setDisplay({
+                display: "none",
+                marginTop: "150px"
+              })}>Got it!</div>
+            </div>
+          </div>
+          <div class="add-post" style={{ marginTop: display.marginTop}}>
             <form class="add-post-form">
               <input
                 class="add-title"
