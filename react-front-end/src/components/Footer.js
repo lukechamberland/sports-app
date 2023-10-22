@@ -6,6 +6,8 @@ export default function Footer() {
   const [showState, setShowState] = useState(0);
   const [showRulesState, setShowRulesState] = useState(0);
 
+  //show state based on user clicks
+
   function readShowState() {
     const none = "none";
     const block = "flex";
@@ -28,6 +30,8 @@ export default function Footer() {
     }
   }
 
+  // maintain proper state management
+
   const setDivDisplay = function (firstState, nextState, originalState) {
     firstState(0);
     nextState(originalState + 1);
@@ -47,7 +51,7 @@ export default function Footer() {
               <p>
                 My name is Luke and I'm a full-stack web developer based in Calgary, Canada. My journey into the tech industry commenced in my formative years, exploring computer animation and graphic design. Over time, my fascination with programming grew, drawn to its inherent logic and problem-solving facets. This prompted my decision to transition my passion for technology into a professional career.
                 I completed a comprehensive web development program at Lighthouse Labs, where I honed my skills and developed an assortment of projects highlighting my capabilities. With a strong command of JavaScript, I specialize in React.js and Express.js, complemented by a proficient understanding of front-end languages like HTML, CSS, and jQuery. My expertise extends to SQL for efficient database management, and I'm well-versed in various front-end frameworks such as Next.js and Vue.js.
-                My latest project, constructed entirely using React and Express, relies on SQL for database administration. This initiative reflects my enthusiasm for sports. For more details on this project, please refer to the README.md file linked below. <br /><br />
+                My latest project, constructed entirely using React and Express, relies on SQL for database administration. This initiative reflects my enthusiasm for sports. For more details and limitations on this project, please refer to the README.md file linked below. <br /><br />
                 <a class="my-links" rel="noopener noreferrer" href="https://github.com/lukechamberland/sports-app/blob/master/README.md" target="_blank">README</a>
                 <br /><br />
                 <a class="my-links" rel="noopener noreferrer" href="https://github.com/lukechamberland?tab=repositories" target="_blank">Github</a>

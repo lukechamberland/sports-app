@@ -22,13 +22,6 @@ const selectFromUsers = function () {
   })
 }
 
-const getIdValue = function (arr) {
-  return new Promise((resolve, reject) => {
-    fetch(arr).then(result => result.json()).then(array => resolve(array[0].id + 1))
-      .catch(err => console.error(err))
-  })
-}
-
 const selectFromPosts = function () {
   return new Promise((resolve, reject) => {
     const statement = 'SELECT * FROM posts;'
@@ -281,7 +274,6 @@ const updateReply = function(newValue, userId) {
 module.exports = { 
   addToUsers, 
   selectFromUsers, 
-  getIdValue, 
   selectFromPosts, 
   getObj, 
   updateVotes, 

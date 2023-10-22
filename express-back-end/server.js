@@ -5,7 +5,6 @@ const PORT = 8080;
 
 const { addToUsers,
   selectFromUsers,
-  getIdValue,
   selectFromPosts,
   getObj,
   updateVotes,
@@ -204,11 +203,21 @@ app.post("/api/replies", (req, res) => {
   const isReplyLike = req.body.isReplyLike;
   const replying = req.body.replying;
   const deleting = req.body.deleting;
-  const newId = req.body.id;
   const originalId = req.body.originalId;
   const change = req.body.change;
   const newUsername = req.body.newUsername;
   const userId = req.body.userId;
+
+  const returnId = function (arr) {
+    let highest = 0;
+    for (let obj of arr) {
+      if (highest < obj.id) {
+        highest = obj.id;
+      }
+    }
+    const newHighest = highest + 1;
+    return newHighest;
+  }
 
   if (change) {
     updateReply(newUsername, userId);
@@ -234,7 +243,7 @@ app.post("/api/replies", (req, res) => {
         }
       } else {
         fetchReplies().then(result => {
-          const id = result.length + 1;
+          const id = returnId(result);
           if (replying) {
             postToReplies(id, postId, reply, username, true, originalId, userId);
           } else {

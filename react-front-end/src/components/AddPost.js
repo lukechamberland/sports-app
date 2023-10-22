@@ -22,7 +22,9 @@ export default function AddPost() {
     setTimeout(() => {
       setFirstState(true)
     }, 1000);
-  }, [])
+  }, []);
+
+  // change route
 
   const changeNavigation = function (route) {
     navigate(route);
@@ -31,6 +33,8 @@ export default function AddPost() {
   const changeState = function (e, state) {
     state(e.target.value);
   }
+  
+  // make sure character length is less than 35
 
   const checkTake = function (string) {
     const splitString = string.split(' ');
@@ -45,9 +49,11 @@ export default function AddPost() {
 
   const post = function () {
     const username = localStorage.getItem("username");
+    // ensure character length
     if (!checkTake(title) || !checkTake(take)) {
       alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
     } else {
+      // send body
       setTimeout(() => {
         changeNavigation('/home');
       }, 50);

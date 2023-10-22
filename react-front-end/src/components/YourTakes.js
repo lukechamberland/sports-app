@@ -33,6 +33,8 @@ export default function YourTakes() {
       .then(results => {
         const [posts, replies] = results;
 
+        // set full takes array of objects
+
         const firstArray = [];
         const secondArray = [];
         const thirdArray = [];
@@ -85,6 +87,8 @@ export default function YourTakes() {
     }, 1500)
   }, []);
 
+  // cap characters at 12
+
   const limitCharacters = function (string) {
     const newArray = [];
     const splitString = string.split('');
@@ -100,6 +104,8 @@ export default function YourTakes() {
     }
   }
 
+  // delete a post
+
   const deletePost = function (objectId, originalid) {
     window.location.reload();
     Axios.post("/api/posts", {
@@ -111,6 +117,8 @@ export default function YourTakes() {
       originalId: originalid
     })
   }
+
+  // ensure correct array length
 
   const checkTakesArray = function (array) {
     if (array[0].length === 0 && array[1].length === 0 && array[2].length === 0) {

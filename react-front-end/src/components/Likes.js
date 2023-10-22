@@ -29,6 +29,9 @@ export default function Likes() {
         setLikesArray(correctObj.likes);
         const correctLikesArray = posts.data.filter((obj) => correctObj.likes.includes(obj.id));
         correctLikesArray.reverse();
+
+        // sort data
+
         const oddArray = [];
         const evenArray = [];
         for (let ele of correctLikesArray) {
@@ -48,11 +51,11 @@ export default function Likes() {
       })
   }, []);
 
-  console.log(evenLikedPosts, oddLikedPosts)
-
   const changeNav = function (route) {
     navigate(route);
   }
+
+  // cap characters at 100
 
   const reduceTake = function (take) {
     const newArray = [];
@@ -68,6 +71,8 @@ export default function Likes() {
     }
   }
 
+  // cap characters at 40
+
   const reduceTitle = function (title) {
     const newArray = [];
     const newTitle = title.split('');
@@ -82,6 +87,8 @@ export default function Likes() {
     }
   }
 
+  // show first likes column
+
   const returnEvenLikedPosts = function () {
     return evenLikedPosts.map((ele) => (
       <div class="likes-ele" onClick={() => changeNav(`/home/${ele.id}`)}>
@@ -95,6 +102,8 @@ export default function Likes() {
     ))
   }
 
+  // show second likes column
+
   const returnOddLikedPosts = function () {
     return oddLikedPosts.map((ele) => (
       <div class="likes-ele" onClick={() => changeNav(`/home/${ele.id}`)}>
@@ -107,6 +116,8 @@ export default function Likes() {
       </div>
     ))
   }
+
+  // return correct data
 
   const returnState = function () {
     if (firstState) {

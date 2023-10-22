@@ -40,6 +40,8 @@ export default function Reply(props) {
     }, 500);
   }, []);
 
+  // read heart color
+
   const readLikedColorState = function () {
     if (likedColorState % 2 === 0) {
       return "grey";
@@ -47,6 +49,8 @@ export default function Reply(props) {
       return "rgb(230, 183, 62)";
     }
   }
+
+  // change heart color and send request body
 
   const changeLikedColorState = function () {
     const username = localStorage.getItem("username");
@@ -88,6 +92,8 @@ export default function Reply(props) {
     setNestedResponse(value);
   }
 
+  // send request body
+
   const sendRequest = function () {
     const username = localStorage.getItem("username");
     setTimeout(() => {
@@ -126,9 +132,13 @@ export default function Reply(props) {
     Axios.post("/api/replies", {
       postId: postid,
       username, 
-      reply: nestedResponse
+      reply: nestedResponse,
+      originalId: JSON.parse(localStorage.getItem("id")),
+      userId: JSON.parse(localStorage.getItem("userId"))
     })
   }
+
+  // indicate if there are no replies
 
   function returnCorrectReplyText(id) {
     const newArray = fullData.filter((obj) => obj.postid === id && obj.post === false);
@@ -141,7 +151,6 @@ export default function Reply(props) {
 
   function returnCorrectButtonClass(id) {
     const newArray = fullData.filter((obj) => obj.postid === id && obj.post === false);
-    console.log(newArray)
     if (newArray.length > 0) {
       return "view-conversation-reply-button";
     } else {

@@ -13,7 +13,9 @@ export default function FirstPage() {
     setTimeout(() => {
       setCircleState(false)
     }, 1000);
-  }, [])
+  }, []);
+
+  // change route
 
   const changeNav = function (route) {
     setDisplayState(false);
@@ -21,6 +23,8 @@ export default function FirstPage() {
       navigate(route);
     }, 1000)
   }
+
+  // return loading state
 
   const changeDisplayState = function () {
     if (circleState) {

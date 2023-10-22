@@ -40,6 +40,8 @@ export default function Profile() {
 
   }, []);
 
+  // check user data
+
   const checkEmail = function (email) {
     if (allEmailsState.includes(email)) {
       return false;
@@ -56,6 +58,8 @@ export default function Profile() {
     }
   }
 
+  // edit a profile 
+
   const changeEditState = function (state, newPostState) {
     setCircleState(0);
     setTimeout(() => {
@@ -69,6 +73,8 @@ export default function Profile() {
     const text = e.target.value;
     setUpdatedState(text);
   }
+
+  // cap characters at 15
 
   const limitCharacters = function (text) {
     const splitText = text.split("");
@@ -85,6 +91,8 @@ export default function Profile() {
       return text;
     }
   }
+
+  // send request body and ensure email is unique
 
   const sendRequest = function (state1, state2) {
 
@@ -132,6 +140,8 @@ export default function Profile() {
       window.location.reload();
     }, 100);
   }
+
+  // return component unless loading
 
   const returnProperState = function () {
     if (circleState === 0) {

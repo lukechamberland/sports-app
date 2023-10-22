@@ -28,6 +28,10 @@
   background-color: rgb(25, 25, 25);
 }
 
+.empty-email-input:focus {
+  outline: none;
+}
+
 .empty-email-input::placeholder {
   color: rgb(255, 122, 122);
 }

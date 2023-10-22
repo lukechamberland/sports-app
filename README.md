@@ -1,7 +1,7 @@
 # Hot-take sports application
 
 This is my first post-graduation passion project, A sports community application where users can 
-sign up/ log in and share popular/unpopular opinions on certain sports related topics.  Anything from NBA goat debates, NFL mvp opinions or any other take a user may want to share, can do so on this website.  
+sign up/login and share popular/unpopular opinions on certain sports related topics.  Anything from NBA GOAT debates, NFL MVP opinions or any other take a user may want to share, can do so on this website.  
 
 ## The app itself
 

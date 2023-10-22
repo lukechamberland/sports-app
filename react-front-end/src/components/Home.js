@@ -40,6 +40,8 @@ export default function Home(props) {
     })
   }, []);
 
+  // find 5 most liked takes
+
   const getFive = function (array) {
     const five = [];
     const sortedArray = array.sort((a, b) => b.likes - a.likes);
@@ -48,6 +50,8 @@ export default function Home(props) {
     }
     return five;
   }
+
+  // cap characters at 100
 
   const limitLargeCharacters = function (text) {
     const splittedText = text.split("");
@@ -103,6 +107,8 @@ export default function Home(props) {
     navigate(`/home/${num}`);
   }
 
+  // cap character number at 25
+
   const limitCharacters = function (text) {
     const splitText = text.split("");
     const newArray = [];
@@ -117,6 +123,8 @@ export default function Home(props) {
       return text;
     }
   }
+
+  // return data
 
   const mappedData = function () {
     return postState.map((ele) => (

@@ -30,8 +30,7 @@ export default function YourReplies() {
         const newArray = replies.data.filter((obj) => obj.username === username);
         const secondNewArray = newArray.reverse();
 
-        console.log(post.data)
-        console.log(secondNewArray)
+        // find correct replies and set them in an array
 
         for (let i = 0; i < secondNewArray.length; i++) {
           if (secondNewArray[i].post) {
@@ -66,6 +65,8 @@ export default function YourReplies() {
 
       })
   }, []);
+
+  // ensure there are replies
 
   const checkReplies = function (array) {
     if (array.length === 0) {

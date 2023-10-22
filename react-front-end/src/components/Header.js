@@ -20,25 +20,34 @@ export default function Header() {
   const [searchContainer, setSearchContainer] = useState("none");
   const [searchLoadingState, setSearchLoadingState] = useState(false);
 
+  // return results based on search
+
   const getSearch = function (e) {
     const value = e.target.value;
     setSearchLoadingState(true);
     setTimeout(() => {
       setSearchLoadingState(false);
     }, 1000);
+
+    // if there is no value don't display the div
+
     if (!value) {
       setShowSearchState([]);
       setSearchContainer("none");
     } else {
+
+      // fetch data and show data
+
       setSearchContainer("block");
       Axios.get("/api/posts").then(data => {
         const newData = data.data;
         const length = data.data.length;
-        console.log(length);
         getValue(newData, value, length);
       })
     }
   }
+
+  // cap number of search results at 5
 
   const getValue = function (array, text, number) {
     const displayArray = [];
@@ -67,6 +76,7 @@ export default function Header() {
     window.location.reload();
   }
 
+
   const changeNavigate = function(route) {
     navigate(route);
   }
@@ -82,6 +92,8 @@ export default function Header() {
     )
     return data;
   }
+
+  // show search results
 
   const returnSearch = function () {
     const data = showSearchState.map((ele) => (

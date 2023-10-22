@@ -53,6 +53,9 @@ export default function Post(props) {
           }
         }
       }
+
+      // check if user has voted
+
       const arr = data.data;
       const username = localStorage.getItem("username");
       const post = JSON.parse(localStorage.getItem("id"));
@@ -68,6 +71,8 @@ export default function Post(props) {
     })
       .catch(err => console.error(err))
   }, []);
+
+  // find users likes
 
   useEffect(() => {
     Axios.get("/api/users").then(data => {
@@ -85,6 +90,8 @@ export default function Post(props) {
     })
   }, []);
 
+  // find all replies
+
   useEffect(() => {
     Axios.get("/api/replies")
       .then(data => {
@@ -94,7 +101,6 @@ export default function Post(props) {
         for (let obj of data.data) {
           if (obj.postid == id) {
             commentArray.push(obj);
-            console.log(obj.likers)
             if (obj.likers.includes(username)) {
               valuesArray.push(1);
             } else {
@@ -106,6 +112,8 @@ export default function Post(props) {
         setRepliesState(commentArray.sort((a, b) => b.likes - a.likes));
       })
   }, []);
+
+  // send vote to backend
 
   const triggerVote = function () {
     setLoadingState(true);
@@ -135,6 +143,8 @@ export default function Post(props) {
     setAverageState(((inputValue + initialInputValue) / (voteState + 1)).toFixed(2));
   }
 
+  // if post is liked by user return gold heart
+
   const isClicked = function () {
     if (likesArray.includes(parseInt(id, 10))) {
       if (colorState === 1) {
@@ -153,6 +163,8 @@ export default function Post(props) {
     }
   }
 
+  // set vote value
+
   const increaseInputValue = function () {
     if (inputValue < 10) {
       setInputValue(inputValue + 0.5);
@@ -168,6 +180,8 @@ export default function Post(props) {
       return;
     }
   }
+
+  // if use has voted don't allow another vote
 
   const returnVoteChangeContainer = function () {
     if (submit % 2 === 0) {
@@ -209,6 +223,8 @@ export default function Post(props) {
     }
   }
 
+  // show average score
+
   const returnScore = function () {
     return (
       <div class="score">
@@ -225,6 +241,8 @@ export default function Post(props) {
   const increaseColorState = function () {
     setColorState(colorState + 1);
   }
+
+  // send request body and update state
 
   const readColorState = function () {
     const username = localStorage.getItem("username");
@@ -269,6 +287,8 @@ export default function Post(props) {
     setResponseState(e.target.value);
   }
 
+  // post reply
+
   const postReply = function () {
     const username = localStorage.getItem("username");
     if (responseState === '') {
@@ -305,6 +325,8 @@ export default function Post(props) {
     }
   }
 
+  // update reply likes
+
   const changeReplyLikes = function (objectId, index) {
     const username = localStorage.getItem("username");
     if (replyLikes[index] % 2 === 0) {
@@ -331,6 +353,8 @@ export default function Post(props) {
         .catch(() => console.log("request failed"))
     }
   }
+
+  // update index of reply and likes
 
   const addRepliesState = function (objectId) {
     const correctObj = repliesState.find((obj) => obj.id === objectId);

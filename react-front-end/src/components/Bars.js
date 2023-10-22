@@ -5,9 +5,13 @@ export default function Bars() {
 
   const navigate = useNavigate();
 
+  // change route
+  
   const changeNavigation = function(route) {
     navigate(route);
   }
+  
+  //send user to home
 
   const redirectToHome = function() {
     changeNavigation("/");

@@ -5,11 +5,24 @@ import Circle from "./Circle";
 
 export default function Login() {
 
-  const [fullData, setFullData] = useState([]);
-
-  const [correctInfoState, setCorrectInfoState] = useState(0);
-
   const navigate = useNavigate();
+
+  const [fullData, setFullData] = useState([]);
+  const [correctInfoState, setCorrectInfoState] = useState(0);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [emailState, setEmailState] = useState({
+    email: "email-input",
+    placeholderText: "Enter your email"
+  });
+
+  const [passwordState, setPasswordState] = useState({
+    password: "email-input",
+    placeholderText: "Enter your password"
+  });
 
   const changeNav = function (route) {
     navigate(route);
@@ -19,6 +32,8 @@ export default function Login() {
     setCorrectInfoState(num);
     setFormData({ ...formData, password: "" });
   }
+
+  // check if email exists
 
   const doesEmailExist = function () {
 
@@ -31,6 +46,8 @@ export default function Login() {
     }
     return value;
   }
+
+  // check password
 
   const checkPassword = function (arr) {
     let condition = true;
@@ -53,21 +70,6 @@ export default function Login() {
       })
   }, []);
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
-  const [emailState, setEmailState] = useState({
-    email: "email-input",
-    placeholderText: "Enter your email"
-  });
-
-  const [passwordState, setPasswordState] = useState({
-    password: "email-input",
-    placeholderText: "Enter your password"
-  });
-
   const returnUsername = function() {
     let correctUsername = null;
     for (let obj of fullData) {
@@ -88,17 +90,23 @@ export default function Login() {
     return correctName;
   }
 
+  // change user input
+
   const changeInput = (e) => {
     const newData = { ...formData }
     newData[e.target.id] = e.target.value;
     setFormData(newData);
   }
 
+  //submit all data
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const condition = doesEmailExist();
     const nextCondition = checkPassword(fullData);
+
+    // check if email exists
 
     if (formData.email === '' || formData.password === '') {
       return;
@@ -161,9 +169,6 @@ export default function Login() {
   const callStateChange = function () {
     changeEmailState();
     changePasswordState();
-    setTimeout(() => {
-      
-    })
   }
 
   const returnCorrectDiv = function () {
