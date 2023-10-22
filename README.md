@@ -23,6 +23,7 @@ This app does currently have some limitations.  All these limitations will be fi
 - Votes are final and cannot be undone (changed or deleted)
 - Replies can not be deleted, only posts can be deleted
 - Only the first level of nested replies can be liked, which are displayed directly below each post
+- This app is currently not formatted correctly for phones, to avoid any display issues it's best to view it full screen on a computer
 
 ## Running the app
 
