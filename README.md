@@ -1,46 +1,45 @@
-# React + Express No-Fluff Boilerplate
+# Hot-take sports application
 
-A boilerplate project for anyone interested in making a project that uses React and Express.
+This is my first post-graduation passion project, A sports community application where users can 
+sign up/ log in and share popular/unpopular opinions on certain sports related topics.  Anything from NBA goat debates, NFL mvp opinions or any other take a user may want to share, can do so on this website.  
 
-This repository is a bootleg of @NimaBoscarino's [React Rails Boilerplate](https://github.com/NimaBoscarino/react-rails-boilerplate). It uses the same React app, but replaces the Rails server with an Express server.
+## The app itself
 
-Note! This boilerplate has _no fluff_! That means that there's nothing set up for you to do authentication stuff, there's no Redux stuff, and there's no React Router stuff. On the Express end, there is no session storage or database connection.
+As previously mentioned, this app allows any opinion/take to be shared and allows for full conversations among users.  The app begins with a basic login/signup system, where the users first name, last name, email, password and username will be safely stored in the projects database. The user is then brought to the home page, where they can view a wide array of takes, listed by most popular to least popular.  Users of course can then click on any post, and view the full take, and corresponding replies.  For the take itself, users can like, unlike and even vote on a take, depending on how much they agree.  Below the post are the corresponging replies, where users can then click on the comment icon and view the full reply. Then users can leave another reply to any level of a nested reply.  The header at the top of every page past the login/signup consists of a profile page which allows users to edit any porfile details, a home page which navigates users to the home page, a search bar which searches through every post to find the best match for the users input, an addition icon which allows users to post a take themselves, a heart icon which allows them to view the takes they've liked, and a bars icon which shows them their own takes, their own replies and an option to logout.  
 
-The main important bit is that the React project has `proxy` set to `localhost:8080` in the `package.json` file, and that the Express app listens to port 8080 in `server.js`. Take a look!
+## Stack
 
-You can (and perhaps should) rename the directories `express-back-end` and `react-front-end` if you want-- The name doesn't matter.
+This application was built entirely through React and Express, with a basic SQL database for data management.  The idea of this project was to build as much of it from scratch as possible, and accordingly, it doesn't use many other frameworks or external libraries such as MaterialUI or AuthO. The total stack list is:
 
-## Running the projects
+- React.js
+- Express.js
+- FontAwesome library
 
-You need **TWO** terminal windows/tabs for this (or some other plan for running two Node processes).
+## Limitations
 
-In one terminal, `cd` into `react-front-end`. Run `npm install` or `yarn` to install the dependencies. Then run `npm start` or `yarn start`, and go to `localhost:3000` in your browser.
+This app does currently have some limitations.  All these limitations will be fixed in the future.
 
-In the other terminal, `cd` into `express-back-end`. Run `npm install` or `yarn` to install the dependencies, then `npm start` or `yarn start` to launch the server.
+- Votes are final and cannot be undone (changed or deleted)
+- Replies can not be deleted, only posts can be deleted
+- Only the first level of nested replies can be liked, which are displayed directly below each post
 
-In the browser, you can click on the button and see the data get loaded.
+## Running the app
 
-If this doesn't work, please message me!
+This application is currently deployed at:
 
-## Next steps
+If you prefer the traditional route and wan't to run this application only on your system, you can follow these steps:
 
-From here, you can start working on your project!
-
-As soon as the dependencies are installed, your Express server can serve JSON and static assets (like images) in response to API calls from the React app. You can get started on developing your React app, routing plan, etc. right away! Any request that isn't handled by React is passed on to the Express server. That means that you can call a route like `/api/users` from React using `fetch`, `axios`, or something else, and Express will receive it as though they originated from the same app. For routing, best practice is to namespace all of your data routes to `/api`, so that they don't clash with other routing schemes, like React Router.
-
-At some point, you'll likely want to install and configure a database driver for Postgres or MongoDB-- Refer to past projects for hints on how to do this.
-
-And don't forget to update the README!
-
-## Example Projects
-
-You might want to look at examples of projects that have used this boilerplate for hints on how to extend it. Here are a few:
-
-* [Later Cart](https://github.com/bonitac/later-cart)
-* [Buddi.io](https://github.com/Danny-Tran/buddi.io)
-
-If you'd like your project added to the list, please shoot me a message.
+1. Clone this repository
+2. Open 2 terminal windows
+3. Cd one of your windows into react-front-end and run `npm install`
+4. In the same directory run `npm start`
+5. In your other directory cd into express-back-end run `npm, install`
+6. In the same directory run `npm start`
+7. Visit this app in your browser at localhost:3000
 
 ## Contact
 
-Please contact me on Slack (@garrettgsb) or Nima at `nima@lighthouselabs.com` if you have any questions, requests, or feedback, or post an issue to this repo. If you are using the boilerplate, I'd love to hear from you as well!
+Email: `luke.chamberland@shaw.ca`
+Discord: `Luke23#6561`
+
+If you have any questions/concerns or feedback for my app please contact me!
