@@ -10,7 +10,7 @@ module.exports = {
       password : process.env.DB_PASS,
       database : process.env.DB_NAME,
       port     : process.env.DB_PORT,
-      ssl      : process.env.DB_SSL,
+      ssl      : true,
     },
     migrations: {
       directory: './db/migrations',
@@ -23,7 +23,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL + '?ssl=true',
     pool: {
       min: 2,
       max: 10,
