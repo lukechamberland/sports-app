@@ -6,7 +6,8 @@
   "author": "garrettgsb",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": "echo 'No build for beckend'"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
