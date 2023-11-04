@@ -1,4 +1,4 @@
-const { pool } = require('../db/connection.js');
+const { pool } = require('./db/connection.js');
 
 const addToUsers = function (id, email, password, firstname, lastname, username) {
   return new Promise((resolve, reject) => {
