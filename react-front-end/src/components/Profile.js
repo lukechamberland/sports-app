@@ -169,13 +169,16 @@ export default function Profile() {
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>Password:</div>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>Username:</div>
               </div>
-              <div style={{ width: "200px", marginLeft: "20px" }}>
+              {
+                fullObjectState.firstname && 
+                <div style={{ width: "200px", marginLeft: "20px" }}>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>{limitCharacters(fullObjectState.firstname)}</div>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>{limitCharacters(fullObjectState.lastname)}</div>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>{limitCharacters(fullObjectState.email)}</div>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>{limitCharacters(fullObjectState.password)}</div>
                 <div style={{ color: "white", marginBottom: "20px", fontSize: "20px" }}>{limitCharacters(fullObjectState.username)}</div>
               </div>
+              }
               <div>
                 <div style={{ color: "white", marginBottom: "10px", fontSize: "20px" }}><button class="profile-edit-button" onClick={() => changeEditState("first name", "firstname")}>edit</button></div>
                 <div style={{ color: "white", marginBottom: "10px", fontSize: "20px" }}><button class="profile-edit-button" onClick={() => changeEditState("last name", "lastname")}>edit</button></div>

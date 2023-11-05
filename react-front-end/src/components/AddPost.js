@@ -17,10 +17,11 @@ export default function AddPost() {
     display: "flex",
     marginTop: "25px"
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setFirstState(true)
+      setIsLoading(false)
     }, 1000);
   }, []);
 
@@ -33,7 +34,7 @@ export default function AddPost() {
   const changeState = function (e, state) {
     state(e.target.value);
   }
-  
+
   // make sure character length is less than 35
 
   const checkTake = function (string) {
@@ -47,16 +48,19 @@ export default function AddPost() {
     }
   }
 
-  const post = function () {
+  const post = function (e) {
+    e.preventDefault();
+    setIsLoading(true);
     const username = localStorage.getItem("username");
     // ensure character length
     if (!checkTake(title) || !checkTake(take)) {
       alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
     } else {
       // send body
-      setTimeout(() => {
-        changeNavigation('/home');
-      }, 50);
+      // setTimeout(() => {
+      //   changeNavigation('/home');
+      // }, 50);
+      console.log("Test")
       Axios.post("/api/posts", {
         username: username,
         title: title,
@@ -65,15 +69,15 @@ export default function AddPost() {
       })
         .then(response => {
           console.log(response);
-          window.location.reload();
+          // window.location.reload();
         })
 
         .catch(error => console.error(error))
     }
+    setIsLoading(false);
   }
 
   const returnState = function () {
-    if (firstState) {
       return (
         <div>
           <div><Header /></div>
@@ -86,7 +90,7 @@ export default function AddPost() {
               })}>Got it!</div>
             </div>
           </div>
-          <div class="add-post" style={{ marginTop: display.marginTop}}>
+          <div class="add-post" style={{ marginTop: display.marginTop }}>
             <form class="add-post-form">
               <input
                 class="add-title"
@@ -102,24 +106,25 @@ export default function AddPost() {
                 onChange={(e) => changeState(e, setTake)}
               ></textarea>
 
-              <button type="submit" class="submit-post" method="POST" action="/api/posts" onClick={() => post()}>post</button>
+              <button type="submit" class="submit-post" method="POST" action="/api/posts" onClick={post}>post</button>
             </form>
           </div>
         </div>
       )
-    } else {
-      return (
-        <div>
-          <div><Header /></div>
-          <div><Circle /></div>
-        </div>
-      )
-    }
+  }
+
+  const returnSpinnerState = function () {
+    return (
+      <div>
+        <div><Header /></div>
+        <div><Circle /></div>
+      </div>
+    )
   }
 
   return (
     <div>
-      <div>{returnState()}</div>
+      <div>{!isLoading ? returnState() : returnSpinnerState()}</div>
     </div>
   )
 }

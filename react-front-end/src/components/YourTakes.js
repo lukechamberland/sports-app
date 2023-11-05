@@ -106,16 +106,18 @@ export default function YourTakes() {
 
   // delete a post
 
-  const deletePost = function (objectId, originalid) {
-    window.location.reload();
-    Axios.post("/api/posts", {
+  const deletePost = async function (objectId, originalid) {
+    void Axios.post("/api/posts", {
       id: objectId
     })
-    Axios.post("/api/replies", {
+    void Axios.post("/api/replies", {
       deleting: true,
       id: objectId,
       originalId: originalid
     })
+    setTimeout(() => {
+      window.location.reload();
+    }, 300)
   }
 
   // ensure correct array length
