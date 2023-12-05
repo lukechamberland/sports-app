@@ -57,10 +57,6 @@ export default function AddPost() {
       alert("Invalid input.  Please ensure that your title/take has no words with more than 35 charachters");
     } else {
       // send body
-      // setTimeout(() => {
-      //   changeNavigation('/home');
-      // }, 50);
-      console.log("Test")
       Axios.post("/api/posts", {
         username: username,
         title: title,
@@ -69,7 +65,7 @@ export default function AddPost() {
       })
         .then(response => {
           console.log(response);
-          // window.location.reload();
+          window.location.reload();
         })
 
         .catch(error => console.error(error))

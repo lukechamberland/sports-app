@@ -27,7 +27,7 @@ This app does currently have some limitations.  All these limitations will be fi
 
 ## Running the app
 
-This application is currently deployed at:
+This application can be seen at: [](https://www.youtube.com/watch?v=jZ8nPkWRjFw)
 
 If you prefer the traditional route and wan't to run this application only on your system, you can follow these steps:
 

@@ -65,6 +65,7 @@ export default function SignUp() {
     // ensure that every email is unique
 
     fetch("/api/users").then(response => response.json()).then(data => {
+      console.log(data)
       for (let ele of data) {
         if (ele.email === formData.email) {
           alert("Email already exists, please log in.")
